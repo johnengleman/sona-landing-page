@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sona - Habit Tracking That Forgives</title>
+    <link
+      rel="icon"
+      type="image/png"
+      href="/mnt/user-data/uploads/logo_small.png"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+        background: #f5f1e8;
+        color: #2c3e50;
+        line-height: 1.7;
+        position: relative;
+      }
+
+      /* Subtle texture overlay */
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="400" height="400"%3E%3Cfilter id="noise"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" /%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noise)" opacity="0.03"/%3E%3C/svg%3E');
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 40px;
+        position: relative;
+        z-index: 2;
+      }
+
+      /* Header */
+      header {
+        padding: 50px 0 30px;
+        background: transparent;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo img {
+        height: 48px;
+        width: auto;
+      }
+
+      .cta-button {
+        background: #5a8b7e;
+        color: white;
+        padding: 12px 32px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 15px;
+        letter-spacing: 0.3px;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        display: inline-block;
+      }
+
+      .cta-button:hover {
+        background: #4a7b6e;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(90, 139, 126, 0.3);
+      }
+
+      /* Hero */
+      .hero {
+        padding: 60px 0 80px;
+      }
+
+      .hero-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        gap: 60px;
+        align-items: center;
+      }
+
+      .hero-content h1 {
+        font-size: 52px;
+        font-weight: 500;
+        color: #2c3e50;
+        margin-bottom: 28px;
+        line-height: 1.2;
+        letter-spacing: -0.5px;
+      }
+
+      .hero-content .problem {
+        font-size: 20px;
+        color: #c47a7a;
+        margin-bottom: 12px;
+        font-weight: 400;
+        line-height: 1.6;
+      }
+
+      .hero-content .solution {
+        font-size: 20px;
+        color: #5a8b7e;
+        margin-bottom: 36px;
+        font-weight: 400;
+        line-height: 1.6;
+      }
+
+      .hero-screenshot {
+        text-align: center;
+      }
+
+      .hero-screenshot img {
+        width: 100%;
+        max-width: 350px;
+        height: auto;
+        border-radius: 30px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+      }
+
+      /* Screenshot Section */
+      .screenshot-section {
+        padding: 100px 0;
+        background: white;
+        position: relative;
+      }
+
+      .screenshot-section::before {
+        content: "";
+        position: absolute;
+        top: -60px;
+        left: 0;
+        right: 0;
+        height: 60px;
+        background: white;
+        clip-path: ellipse(100% 100% at 50% 100%);
+      }
+
+      .screenshot-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
+        margin-bottom: 80px;
+      }
+
+      .screenshot-grid.reverse {
+        direction: rtl;
+      }
+
+      .screenshot-grid.reverse > * {
+        direction: ltr;
+      }
+
+      .screenshot-content h2 {
+        font-size: 36px;
+        margin-bottom: 20px;
+        color: #2c3e50;
+        font-weight: 400;
+      }
+
+      .screenshot-content h3 {
+        font-size: 28px;
+        margin-bottom: 16px;
+        color: #2c3e50;
+        font-weight: 400;
+      }
+
+      .screenshot-content p {
+        font-size: 18px;
+        color: #5a6b63;
+        line-height: 1.8;
+        font-weight: 300;
+        margin-bottom: 12px;
+      }
+
+      .app-screenshot {
+        width: 100%;
+        max-width: 350px;
+        height: auto;
+        border-radius: 30px;
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
+        margin: 0 auto;
+        display: block;
+      }
+
+      /* Grace Hero Section */
+      .grace-hero {
+        padding: 100px 0;
+        background: linear-gradient(
+          135deg,
+          #6b9a88 0%,
+          #5a8b7e 50%,
+          #7dad9e 100%
+        );
+        position: relative;
+        overflow: hidden;
+        color: white;
+        text-align: center;
+      }
+
+      .grace-hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url("/mnt/user-data/uploads/bonsai-island.png");
+        background-size: cover;
+        background-position: center;
+        opacity: 0.1;
+        z-index: 0;
+      }
+
+      .grace-hero > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .grace-hero h2 {
+        font-size: 42px;
+        margin-bottom: 32px;
+        font-weight: 400;
+        letter-spacing: -0.5px;
+      }
+
+      .grace-hero p {
+        font-size: 22px;
+        line-height: 1.7;
+        max-width: 700px;
+        margin: 0 auto;
+        opacity: 0.95;
+        font-weight: 300;
+      }
+
+      /* Simple Features */
+      .features-simple {
+        padding: 80px 0;
+        background: #f5f1e8;
+        text-align: center;
+      }
+
+      .features-simple h2 {
+        font-size: 36px;
+        margin-bottom: 20px;
+        font-weight: 400;
+        color: #2c3e50;
+      }
+
+      .features-simple .subtitle {
+        font-size: 18px;
+        color: #5a6b63;
+        margin-bottom: 60px;
+        font-weight: 300;
+      }
+
+      .features-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 60px;
+        align-items: center;
+      }
+
+      .feature-screenshot-item {
+        text-align: center;
+      }
+
+      .feature-screenshot-item img {
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+        border-radius: 25px;
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+      }
+
+      .feature-screenshot-item h3 {
+        font-size: 22px;
+        margin-bottom: 12px;
+        color: #2c3e50;
+        font-weight: 500;
+      }
+
+      .feature-screenshot-item p {
+        font-size: 16px;
+        color: #5a6b63;
+        font-weight: 300;
+        line-height: 1.6;
+      }
+
+      /* Comparison */
+      .comparison {
+        padding: 80px 0;
+        background: white;
+        position: relative;
+      }
+
+      .comparison::before {
+        content: "";
+        position: absolute;
+        top: -60px;
+        left: 0;
+        right: 0;
+        height: 60px;
+        background: white;
+        clip-path: ellipse(100% 100% at 50% 100%);
+      }
+
+      .comparison h2 {
+        font-size: 36px;
+        text-align: center;
+        margin-bottom: 60px;
+        font-weight: 400;
+        color: #2c3e50;
+      }
+
+      .comparison-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+
+      .comparison-card {
+        background: #f5f1e8;
+        padding: 40px;
+        border-radius: 30px;
+        border: 2px solid transparent;
+      }
+
+      .comparison-card.highlight {
+        background: linear-gradient(135deg, #f5f1e8 0%, #e5dfd2 100%);
+        border-color: #5a8b7e;
+      }
+
+      .comparison-card h3 {
+        font-size: 20px;
+        margin-bottom: 24px;
+        color: #2c3e50;
+        font-weight: 500;
+        text-align: center;
+      }
+
+      .comparison-card ul {
+        list-style: none;
+      }
+
+      .comparison-card li {
+        padding: 12px 0;
+        font-size: 15px;
+        color: #2c3e50;
+        border-bottom: 1px solid rgba(90, 139, 126, 0.1);
+      }
+
+      .comparison-card li:last-child {
+        border-bottom: none;
+      }
+
+      .comparison-card .check {
+        color: #5a8b7e;
+        margin-right: 8px;
+        font-weight: bold;
+      }
+
+      .comparison-card .cross {
+        color: #c47a7a;
+        margin-right: 8px;
+        font-weight: bold;
+      }
+
+      /* Pricing */
+      .pricing {
+        padding: 100px 0;
+        text-align: center;
+        background: #f5f1e8;
+      }
+
+      .pricing h2 {
+        font-size: 36px;
+        margin-bottom: 16px;
+        font-weight: 400;
+        color: #2c3e50;
+      }
+
+      .pricing .subtitle {
+        font-size: 18px;
+        color: #5a6b63;
+        margin-bottom: 50px;
+        font-weight: 300;
+      }
+
+      .pricing-card {
+        max-width: 450px;
+        margin: 0 auto;
+        background: white;
+        padding: 50px 40px;
+        border-radius: 30px;
+        box-shadow: 0 16px 48px rgba(0, 0, 0, 0.08);
+        border: 1px solid rgba(90, 139, 126, 0.15);
+      }
+
+      .price {
+        font-size: 56px;
+        font-weight: 400;
+        color: #5a8b7e;
+        margin-bottom: 8px;
+        letter-spacing: -2px;
+      }
+
+      .price-period {
+        font-size: 17px;
+        color: #5a6b63;
+        margin-bottom: 32px;
+        font-weight: 300;
+      }
+
+      .pricing-features {
+        text-align: left;
+        margin-bottom: 32px;
+      }
+
+      .pricing-features li {
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(90, 139, 126, 0.1);
+        list-style: none;
+        color: #2c3e50;
+        font-size: 15px;
+      }
+
+      .pricing-features li:before {
+        content: "✓";
+        color: #5a8b7e;
+        font-weight: bold;
+        margin-right: 10px;
+      }
+
+      /* Final CTA */
+      .final-cta {
+        padding: 120px 0;
+        text-align: center;
+        background: linear-gradient(
+          135deg,
+          #6b9a88 0%,
+          #5a8b7e 50%,
+          #7dad9e 100%
+        );
+        position: relative;
+        overflow: hidden;
+        color: white;
+      }
+
+      .final-cta::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url("/mnt/user-data/uploads/bonsai-island.png");
+        background-size: cover;
+        background-position: center;
+        opacity: 0.12;
+        z-index: 0;
+      }
+
+      .final-cta > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .final-cta h2 {
+        font-size: 44px;
+        margin-bottom: 24px;
+        font-weight: 400;
+        letter-spacing: -0.5px;
+      }
+
+      .final-cta p {
+        font-size: 20px;
+        margin-bottom: 40px;
+        opacity: 0.95;
+        line-height: 1.6;
+        font-weight: 300;
+      }
+
+      .cta-button.white {
+        background: white;
+        color: #5a8b7e;
+        padding: 14px 40px;
+        font-size: 17px;
+      }
+
+      .cta-button.white:hover {
+        background: #f5f1e8;
+        color: #4a7b6e;
+      }
+
+      /* Footer */
+      footer {
+        padding: 50px 0;
+        text-align: center;
+        color: #7a9b8e;
+        background: #f5f1e8;
+      }
+
+      footer p {
+        font-size: 14px;
+        font-weight: 300;
+      }
+
+      /* Responsive */
+      @media (max-width: 768px) {
+        .container {
+          padding: 0 24px;
+        }
+
+        .hero {
+          padding: 60px 0 80px;
+        }
+
+        .hero-content h1 {
+          font-size: 38px;
+        }
+
+        .hero-grid,
+        .screenshot-grid,
+        .screenshot-grid.reverse,
+        .comparison-grid,
+        .features-grid {
+          grid-template-columns: 1fr;
+          gap: 40px;
+          direction: ltr;
+        }
+
+        .grace-hero,
+        .screenshot-section,
+        .features-simple,
+        .comparison,
+        .pricing,
+        .final-cta {
+          padding: 60px 0;
+        }
+
+        .grace-hero h2,
+        .screenshot-content h2,
+        .comparison h2,
+        .pricing h2,
+        .final-cta h2 {
+          font-size: 28px;
+        }
+
+        .price {
+          font-size: 44px;
+        }
+
+        .screenshot-section::before,
+        .comparison::before {
+          display: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <nav>
+          <div class="logo">
+            <img src="/mnt/user-data/uploads/logo_small.png" alt="Sona" />
+          </div>
+          <a href="#download" class="cta-button">Download</a>
+        </nav>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="container">
+        <div class="hero-grid">
+          <div class="hero-content">
+            <h1>Stop Breaking Streaks.<br />Start Building Habits.</h1>
+            <p class="problem">
+              ❌ Miss one day → Lose your streak → Feel like a failure → Give up
+            </p>
+            <p class="solution">
+              ✓ Sona gives you grace completions. Earn forgiveness through
+              consistency.
+            </p>
+            <a href="#download" class="cta-button">Download Free</a>
+          </div>
+          <div class="hero-screenshot">
+            <img
+              src="/mnt/user-data/uploads/Screenshot_2025-11-15_at_11_06_15_PM.png"
+              alt="Sona home screen showing grace completions"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="screenshot-section">
+      <div class="container">
+        <div class="screenshot-grid">
+          <img
+            src="/mnt/user-data/uploads/Screenshot_2025-11-15_at_11_10_39_PM.png"
+            alt="Calendar heatmap"
+            class="app-screenshot"
+          />
+          <div class="screenshot-content">
+            <h3>🛡️ Grace Completions = Visible Forgiveness</h3>
+            <p>Complete 5 scheduled instances → Earn 1 grace completion</p>
+            <p>
+              When you miss a day, grace automatically protects your progress
+            </p>
+            <p>No guilt. No broken chains. Just sustainable growth.</p>
+          </div>
+        </div>
+
+        <div class="screenshot-grid reverse">
+          <div class="screenshot-content">
+            <h3>📊 See Your Growth</h3>
+            <p>Calendar heatmaps show your patterns at a glance</p>
+            <p>Track habit strength over 20, 30, 60, or 90 days</p>
+            <p>Beautiful insights without overwhelming numbers</p>
+          </div>
+          <img
+            src="/mnt/user-data/uploads/Screenshot_2025-11-15_at_11_10_52_PM.png"
+            alt="Habit edit screen"
+            class="app-screenshot"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="grace-hero">
+      <div class="container">
+        <h2>Built on Research, Not Hype</h2>
+        <p>
+          Studies show perfectionism increased 33% and broken streaks are
+          "especially demotivating." Sona treats missed days as data, not
+          failure.
+        </p>
+      </div>
+    </section>
+
+    <section class="features-simple">
+      <div class="container">
+        <h2>Everything You Actually Need</h2>
+        <p class="subtitle">
+          No broken widgets. No aggressive paywalls. Just tools that work.
+        </p>
+
+        <div class="features-grid">
+          <div class="feature-screenshot-item">
+            <img
+              src="/mnt/user-data/uploads/Screenshot_2025-11-15_at_11_11_40_PM.png"
+              alt="Icon selection"
+            />
+            <h3>Personal Touch</h3>
+            <p>Dozens of icons and colors to make it yours</p>
+          </div>
+          <div class="feature-screenshot-item">
+            <img
+              src="/mnt/user-data/uploads/Screenshot_2025-11-15_at_11_11_59_PM.png"
+              alt="Reminders"
+            />
+            <h3>Reliable Reminders</h3>
+            <p>Notifications that actually work, when you need them</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="comparison">
+      <div class="container">
+        <h2>How Sona Compares</h2>
+        <div class="comparison-grid">
+          <div class="comparison-card">
+            <h3>Other Apps</h3>
+            <ul>
+              <li><span class="cross">✗</span> 3-5 free habits</li>
+              <li><span class="cross">✗</span> No forgiveness system</li>
+              <li><span class="cross">✗</span> $60-80/year</li>
+              <li><span class="cross">✗</span> Broken widgets</li>
+              <li><span class="cross">✗</span> Non-responsive support</li>
+              <li><span class="cross">✗</span> Data export locked</li>
+            </ul>
+          </div>
+          <div class="comparison-card highlight">
+            <h3>Sona</h3>
+            <ul>
+              <li>
+                <span class="check">✓</span> <strong>10+ free habits</strong>
+              </li>
+              <li>
+                <span class="check">✓</span> <strong>Grace completions</strong>
+              </li>
+              <li><span class="check">✓</span> <strong>$23.88/year</strong></li>
+              <li>
+                <span class="check">✓</span> <strong>Actually works</strong>
+              </li>
+              <li>
+                <span class="check">✓</span> <strong>Real support</strong>
+              </li>
+              <li>
+                <span class="check">✓</span> <strong>Export included</strong>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="pricing">
+      <div class="container">
+        <h2>Simple, Fair Pricing</h2>
+        <p class="subtitle">75% less than competitors. No tricks.</p>
+
+        <div class="pricing-card">
+          <div class="price">$1.99</div>
+          <div class="price-period">per month</div>
+
+          <ul class="pricing-features">
+            <li>Unlimited habits (10+ free)</li>
+            <li>Grace completions system</li>
+            <li>All frequency options</li>
+            <li>Full statistics & calendar</li>
+            <li>Reliable reminders</li>
+            <li>CSV export</li>
+            <li>Priority support</li>
+          </ul>
+
+          <a href="#download" class="cta-button">Start Free Trial</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-cta">
+      <div class="container">
+        <h2>Ready to Build Habits That Stick?</h2>
+        <p>Join people building sustainable habits without the anxiety.</p>
+        <a href="#download" class="cta-button white">Download Sona</a>
+      </div>
+    </section>
+
+    <footer>
+      <div class="container">
+        <p>
+          © 2025 Sona • Built for people who want to improve themselves without
+          the BS
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>

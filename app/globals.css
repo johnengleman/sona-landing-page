@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+:root {
+  /* Dark Cozy Modern Theme */
+  --background: #181614; /* Very Dark Warm Grey */
+  --background-secondary: #24211e; /* Dark Warm Grey */
+
+  --surface: #24211e;
+  --surface-secondary: #302c28; /* Lighter Warm Grey */
+
+  --text: #fdfcf8; /* Warm Cream */
+  --text-secondary: #c8c4bd; /* Muted Cream */
+  --text-tertiary: #96928d; /* Darker Muted Cream */
+
+  --primary: #e08f70; /* Bright Terracotta */
+  --primary-light: #f0c0b0; /* Light Terracotta */
+  --accent-blue: #8fb3b1; /* Sage/Teal */
+
+  /* Organic Blob Colors - App Habit Colors */
+  --blob-1: #d65d5d; /* Red (Brightened) */
+  --blob-2: #00a870; /* Teal (Brightened) */
+  --blob-3: #d68a5d; /* Orange (Brightened) */
+
+  --success: #7ba87e; /* Muted Green */
+  --warning: #e6b070; /* Muted Gold */
+  --error: #d65d5d; /* Terracotta */
+}
+
+@theme {
+  --color-background: var(--background);
+  --color-background-secondary: var(--background-secondary);
+
+  --color-surface: var(--surface);
+  --color-surface-secondary: var(--surface-secondary);
+
+  --color-text: var(--text);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-tertiary: var(--text-tertiary);
+
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-accent-blue: var(--accent-blue);
+
+  --color-blob-1: var(--blob-1);
+  --color-blob-2: var(--blob-2);
+  --color-blob-3: var(--blob-3);
+
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-friendly: var(--font-quicksand);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-friendly), ui-sans-serif, system-ui, sans-serif;
+}
