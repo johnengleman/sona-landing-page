@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Quicksand } from "next/font/google";
+import { Geist, Geist_Mono, Newsreader } from "next/font/google";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,18 +12,21 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const quicksand = Quicksand({
-  variable: "--font-quicksand",
+const newsreader = Newsreader({
+  variable: "--font-newsreader",
   subsets: ["latin"],
+  style: ["normal", "italic"],
   weight: ["300", "400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
   title: "Sona - Habit Tracking That Forgives",
   description:
-    "Stop breaking streaks. Start building habits. Sona gives you rest days/weeks/months — earn forgiveness through consistency. 75% less than competitors.",
+    "Build habits that survive real life. Sona tracks consistency (not fragile streaks) and lets you earn rest days so one missed day doesn’t erase your progress.",
   icons: {
     icon: "/logo_small.png",
+    shortcut: "/logo_small.png",
+    apple: "/logo_small.png",
   },
 };
 
@@ -35,7 +38,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${quicksand.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${newsreader.variable} antialiased`}
       >
         {children}
       </body>

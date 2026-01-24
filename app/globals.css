@@ -1,29 +1,32 @@
 @import "tailwindcss";
 
 :root {
-  /* Dark Cozy Modern Theme */
-  --background: #181614; /* Very Dark Warm Grey */
-  --background-secondary: #24211e; /* Dark Warm Grey */
+  /* Dark editorial theme (warm, premium) */
+  --background: #0f0f10;
+  --background-secondary: #17171a;
 
-  --surface: #24211e;
-  --surface-secondary: #302c28; /* Lighter Warm Grey */
+  --surface: rgba(255, 255, 255, 0.04);
+  --surface-secondary: rgba(255, 255, 255, 0.06);
 
-  --text: #fdfcf8; /* Warm Cream */
-  --text-secondary: #c8c4bd; /* Muted Cream */
-  --text-tertiary: #96928d; /* Darker Muted Cream */
+  --text: #f5f2ea;
+  --text-secondary: rgba(245, 242, 234, 0.72);
+  --text-tertiary: rgba(245, 242, 234, 0.52);
 
-  --primary: #e08f70; /* Bright Terracotta */
-  --primary-light: #f0c0b0; /* Light Terracotta */
-  --accent-blue: #8fb3b1; /* Sage/Teal */
+  --primary: #e7a07f; /* warm sand */
+  --primary-light: #f2c6ad;
+  --accent-blue: #8fb7c6;
 
-  /* Organic Blob Colors - App Habit Colors */
-  --blob-1: #d65d5d; /* Red (Brightened) */
-  --blob-2: #00a870; /* Teal (Brightened) */
-  --blob-3: #d68a5d; /* Orange (Brightened) */
+  /* Orbs */
+  --blob-1: #e26b5b;
+  --blob-2: #23b6a2;
+  --blob-3: #f0a35c;
 
-  --success: #7ba87e; /* Muted Green */
-  --warning: #e6b070; /* Muted Gold */
-  --error: #d65d5d; /* Terracotta */
+  --success: #7dc08d;
+  --warning: #f0c27a;
+  --error: #e26b5b;
+
+  --ring: rgba(231, 160, 127, 0.28);
+  --hairline: rgba(255, 255, 255, 0.1);
 }
 
 @theme {
@@ -51,7 +54,7 @@
 
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-  --font-friendly: var(--font-quicksand);
+  --font-display: var(--font-newsreader);
 }
 
 body {
@@ -60,11 +63,37 @@ body {
   font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
 }
 
+/* Background craft: subtle grid + spotlight */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(
+      1200px 800px at 50% -10%,
+      rgba(231, 160, 127, 0.12),
+      transparent 60%
+    ),
+    radial-gradient(
+      900px 700px at 0% 20%,
+      rgba(143, 183, 198, 0.1),
+      transparent 55%
+    ),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.04), transparent 18%),
+    linear-gradient(to right, rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+  background-size: auto, auto, auto, 110px 110px, 110px 110px;
+  opacity: 0.3;
+  transform: translateZ(0);
+}
+
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-friendly), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-display), ui-serif, Georgia, serif;
+  letter-spacing: -0.02em;
 }

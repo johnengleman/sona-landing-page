@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 export default function Sparkle({
   className,
@@ -9,6 +10,8 @@ export default function Sparkle({
   className?: string;
   delay?: number;
 }) {
+  const [repeatDelay] = useState(() => Math.random() * 3 + 1);
+
   return (
     <motion.div
       initial={{ scale: 0, opacity: 0, rotate: 0 }}
@@ -20,7 +23,7 @@ export default function Sparkle({
       transition={{
         duration: 2,
         repeat: Infinity,
-        repeatDelay: Math.random() * 3 + 1,
+        repeatDelay,
         delay: delay,
         ease: "easeInOut",
       }}

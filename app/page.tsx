@@ -1,600 +1,561 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import NoiseOverlay from "./components/NoiseOverlay";
-import Sparkle from "./components/Sparkle";
+import Link from "next/link";
+import { Icon } from "./components/Icon";
+import { ParallaxPill, HabitGrid } from "./components/Pill";
 
-// Pebble Component (Shiny Jewel/Candy Style)
-const Pebble = ({
-  className,
-  color,
-  initialRotation = 0,
-  speed = 0.2,
-  parallaxSpeed = 0.1,
-}: {
-  className?: string;
-  color: string;
-  initialRotation?: number;
-  speed?: number;
-  parallaxSpeed?: number;
-}) => {
-  const { scrollY } = useScroll();
-  const rotate = useTransform(
-    scrollY,
-    [0, 2000],
-    [initialRotation, initialRotation + speed * 360]
-  );
-  const y = useTransform(scrollY, [0, 1000], [0, parallaxSpeed * 200]);
+/**
+ * VERSION 1: Light & Airy
+ * - Warm cream palette matching app's light mode
+ * - Parallax floating pills with app's actual colors
+ * - Focus on the app's visual language
+ * - Friendly, welcoming tone
+ */
 
+const habits = [
+  { name: "Drink Water", color: "blue" as const, streak: 14 },
+  { name: "Go For a Walk", color: "green" as const, streak: 7 },
+  { name: "Read", color: "amber" as const, streak: 21 },
+];
+
+const benefits = [
+  {
+    icon: "solar:bell-bing-bold-duotone",
+    title: "Reminders",
+    desc: "Smart nudges that fit your schedule.",
+    color: "bg-[#4a6fa5]/10 text-[#4a6fa5]",
+  },
+  {
+    icon: "solar:folder-with-files-bold-duotone",
+    title: "Categories",
+    desc: "Organize habits by area of life.",
+    color: "bg-[#4a9a7c]/10 text-[#4a9a7c]",
+  },
+  {
+    icon: "solar:palette-round-bold-duotone",
+    title: "Icons",
+    desc: "Make each habit easy to spot.",
+    color: "bg-amber-500/10 text-amber-600",
+  },
+  {
+    icon: "solar:document-add-bold-duotone",
+    title: "Templates",
+    desc: "Start fast with ready-made routines.",
+    color: "bg-[#4a6fa5]/10 text-[#4a6fa5]",
+  },
+  {
+    icon: "solar:chart-square-bold-duotone",
+    title: "Statistics",
+    desc: "See trends and consistency at a glance.",
+    color: "bg-[#4a9a7c]/10 text-[#4a9a7c]",
+  },
+];
+
+export default function Version1() {
   return (
-    <motion.div
-      className={`absolute z-0 rounded-[35%] ${className}`}
-      style={{
-        // Base color
-        backgroundColor: color,
-        // Outer glow/shadow using the pebble's color
-        boxShadow: `
-          inset 20px 20px 40px rgba(255,255,255,0.25),
-          inset -20px -20px 40px rgba(0,0,0,0.2),
-          0 20px 40px -12px ${color}, 
-          0 8px 16px -8px ${color}
-        `,
-        rotate,
-        y,
-      }}
-    >
-      {/* Main Body Gradient (Simulates the gemHighlight -> gemBottom) */}
-      <div
-        className="absolute inset-0 rounded-[35%]"
-        style={{
-          background: `linear-gradient(135deg, 
-          rgba(255,255,255,0.4) 0%, 
-          rgba(255,255,255,0.1) 25%, 
-          transparent 50%, 
-          rgba(0,0,0,0.05) 75%, 
-          rgba(0,0,0,0.15) 100%)`,
-        }}
-      />
-
-      {/* Top-Left Highlight (Sharp reflection) */}
-      <div
-        className="absolute inset-0 rounded-[35%]"
-        style={{
-          background: `linear-gradient(135deg, rgba(255,255,255,0.5) 0%, transparent 40%)`,
-        }}
-      />
-    </motion.div>
-  );
-};
-
-// Animated Feature: Rest Days System
-const GraceDemo = () => {
-  return (
-    <div className="bg-surface rounded-2xl shadow-2xl p-6 w-full max-w-xs mx-auto border border-white/5">
-      <div className="grid grid-cols-7 gap-2 mb-4">
-        {["M", "T", "W", "T", "F", "S", "S"].map((d, i) => (
-          <div
-            key={i}
-            className="text-center text-xs text-text-tertiary font-medium"
-          >
-            {d}
-          </div>
-        ))}
-        {Array.from({ length: 7 }).map((_, i) => (
-          <motion.div
-            key={i}
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: i * 0.1 }}
-            className={`aspect-square rounded-lg flex items-center justify-center text-sm font-bold
-              ${
-                i === 3
-                  ? "bg-primary/20 text-primary"
-                  : i < 3
-                  ? "bg-success/20 text-success"
-                  : "bg-surface-secondary text-text-tertiary"
-              }`}
-          >
-            {i < 3 && "✓"}
-            {i === 3 && (
-              <motion.span
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.5 }}
-              >
-                G
-              </motion.span>
-            )}
-          </motion.div>
-        ))}
+    <div className="min-h-screen bg-[#fffbf7] text-[#2d2a26] font-sans selection:bg-amber-200 overflow-x-hidden">
+      {/* Warm background gradients */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-0 right-0 w-[70%] h-[60%] bg-linear-to-bl from-amber-100/50 via-transparent to-transparent" />
+        <div className="absolute bottom-0 left-0 w-[50%] h-[50%] bg-linear-to-tr from-[#4a9a7c]/5 to-transparent" />
       </div>
-      <div className="flex items-center gap-3 bg-primary/10 p-3 rounded-xl">
-        <div className="w-8 h-8 rounded-full bg-primary/20 flex items-center justify-center text-primary text-sm">
-          🛡️
-        </div>
-        <div>
-          <div className="text-xs font-bold text-text">Streak Saved</div>
-          <div className="text-[10px] text-text-secondary">
-            Rest day applied for Thursday
-          </div>
-        </div>
+
+      {/* Parallax Pills Background */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        <ParallaxPill
+          color="blue"
+          variant="filled"
+          size="xl"
+          speed={-0.3}
+          rotate={-15}
+          opacity={0.15}
+          className="absolute top-[15%] left-[8%]"
+        />
+        <ParallaxPill
+          color="green"
+          variant="filled"
+          size="lg"
+          speed={0.4}
+          rotate={20}
+          opacity={0.12}
+          className="absolute top-[25%] right-[10%]"
+        />
+        <ParallaxPill
+          color="amber"
+          variant="filled"
+          size="md"
+          speed={-0.5}
+          rotate={10}
+          opacity={0.2}
+          className="absolute top-[60%] left-[5%]"
+        />
+        <ParallaxPill
+          color="blue"
+          variant="faded"
+          size="lg"
+          speed={0.3}
+          rotate={-10}
+          opacity={0.1}
+          className="absolute top-[70%] right-[15%]"
+        />
+        <ParallaxPill
+          color="green"
+          variant="filled"
+          size="sm"
+          speed={-0.2}
+          rotate={25}
+          opacity={0.25}
+          className="absolute top-[40%] right-[5%]"
+        />
       </div>
-    </div>
-  );
-};
 
-// Animated Feature: Focus List
-const FocusDemo = () => {
-  const [checked, setChecked] = useState(false);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setChecked((prev) => !prev);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <div className="bg-surface rounded-2xl shadow-2xl p-6 w-full max-w-xs mx-auto border border-white/5 relative overflow-hidden">
-      <div className="text-sm font-bold text-text-secondary mb-4 uppercase tracking-wider">
-        My Habits
-      </div>
-      <div className="space-y-3">
-        <div className="flex items-center gap-3">
-          <motion.div
-            animate={{
-              backgroundColor: checked ? "var(--color-success)" : "transparent",
-              borderColor: checked
-                ? "var(--color-success)"
-                : "var(--color-surface-secondary)",
-            }}
-            className="w-5 h-5 rounded-full border-2 flex items-center justify-center"
+      {/* Nav */}
+      <header className="fixed top-0 left-0 right-0 z-50 bg-[#fffbf7]/80 backdrop-blur-xl border-b border-amber-900/5">
+        <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+          <Link href="/" className="flex items-center gap-2">
+            <div className="relative w-9 h-9">
+              <Image
+                src="/logo_small.png"
+                alt="Sona logo"
+                fill
+                className="object-contain"
+              />
+            </div>
+            <span className="font-bold text-lg">Sona</span>
+          </Link>
+          <nav className="hidden md:flex items-center gap-8 text-sm text-[#6b6560]">
+            <a
+              href="#features"
+              className="hover:text-[#2d2a26] transition-colors"
+            >
+              Features
+            </a>
+          </nav>
+          <a
+            href="#download"
+            className="inline-flex items-center justify-center gap-3 px-6 py-2.5 rounded-2xl bg-[#2d2a26] text-white text-sm font-semibold hover:bg-[#3d3a36] transition-colors shadow-xl shadow-amber-900/10"
           >
-            {checked && (
-              <motion.span
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                className="text-white text-xs"
-              >
-                ✓
-              </motion.span>
-            )}
-          </motion.div>
-          <span
-            className={`text-sm font-medium transition-colors ${
-              checked ? "text-text-tertiary line-through" : "text-text"
-            }`}
-          >
-            Morning Meditation
-          </span>
+            <Icon icon="simple-icons:apple" className="w-4 h-4" />
+            Get the beta
+          </a>
         </div>
-        <div className="flex items-center gap-3 opacity-50">
-          <div className="w-5 h-5 rounded-full border-2 border-surface-secondary" />
-          <span className="text-sm font-medium text-text">Read 10 pages</span>
-        </div>
-        <div className="flex items-center gap-3 opacity-50">
-          <div className="w-5 h-5 rounded-full border-2 border-surface-secondary" />
-          <span className="text-sm font-medium text-text">Drink water</span>
-        </div>
-      </div>
-    </div>
-  );
-};
+      </header>
 
-export default function Home() {
-  const { scrollY } = useScroll();
-  const textY = useTransform(scrollY, [0, 1000], [0, 150]);
-  const phoneY = useTransform(scrollY, [0, 1000], [0, -100]);
-
-  return (
-    <div className="min-h-screen bg-background text-text font-sans selection:bg-primary/20 selection:text-primary overflow-x-hidden">
-      <NoiseOverlay />
-      <main className="pt-12 lg:pt-20">
-        {/* Hero Section */}
-        <section className="max-w-7xl mx-auto px-6 mb-32 relative">
-          {/* Spotlight Effect */}
-          <div className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[1200px] h-[1200px] bg-primary/5 rounded-full blur-[100px] -z-10 pointer-events-none" />
-
-          <Sparkle
-            className="top-20 left-[10%] w-8 h-8 text-primary/60"
-            delay={0}
-          />
-          <Sparkle
-            className="top-40 right-[15%] w-6 h-6 text-accent-blue/60"
-            delay={1.5}
-          />
-          <Sparkle
-            className="bottom-20 left-[20%] w-4 h-4 text-success/60"
-            delay={0.8}
-          />
-
-          <Pebble
-            color="var(--color-blob-1)"
-            className="w-[600px] h-[600px] -top-40 -right-40"
-            initialRotation={12}
-            speed={0.15}
-            parallaxSpeed={0.5}
-          />
-          <Pebble
-            color="var(--color-blob-2)"
-            className="w-[400px] h-[400px] top-20 -left-20"
-            initialRotation={-12}
-            speed={-0.1}
-            parallaxSpeed={0.8}
-          />
-
-          <div className="grid lg:grid-cols-2 gap-16 items-center relative z-10">
-            <motion.div style={{ y: textY }}>
+      <main className="relative z-10 pt-16">
+        {/* Hero */}
+        <section className="pt-24 pb-32 px-6">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid lg:grid-cols-[1fr_1.15fr] gap-16 items-start">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8 }}
-                className="relative"
+                transition={{ duration: 0.6 }}
+                className="text-left"
               >
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface shadow-[inset_2px_2px_4px_rgba(0,0,0,0.2),inset_-2px_-2px_4px_rgba(255,255,255,0.05)] border border-white/5 mb-8">
-                  <span className="w-2 h-2 rounded-full bg-success shadow-[0_0_8px_var(--color-success)]"></span>
-                  <span className="text-sm font-medium text-text-secondary">
-                    Available on iOS
+                <h1 className="text-5xl md:text-6xl font-bold leading-[1.05] mb-6 tracking-tight">
+                  Build habits without{" "}
+                  <span className="relative inline-block">
+                    <span className="relative z-10">streak guilt</span>
+                    <span className="absolute inset-x-0 -bottom-1 h-[4px] bg-amber-200/70 -z-0 rounded-full" />
                   </span>
-                </div>
+                  .
+                  <br />
+                  Track{" "}
+                  <span className="relative inline-block">
+                    <span className="relative z-10">consistency</span>
+                    <svg
+                      className="absolute -bottom-2 left-0 w-full"
+                      viewBox="0 0 200 12"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M2 8 Q 100 2 198 8"
+                        stroke="#4a6fa5"
+                        strokeWidth="4"
+                        strokeLinecap="round"
+                      />
+                    </svg>
+                  </span>
+                  , not perfection.
+                </h1>
 
-                {/* Liquid Glass Card - Cozy Organic Shape */}
-                <div className="relative rounded-tl-[3rem] rounded-tr-[8rem] rounded-br-[2rem] rounded-bl-[6rem] p-10 border border-white/5 bg-surface/60 backdrop-blur-[50px] backdrop-saturate-[150%] shadow-[0_20px_50px_-12px_rgba(0,0,0,0.5),inset_0_0_40px_rgba(255,255,255,0.03)] mb-12 overflow-hidden group">
-                  {/* Glossy Shine - Warmer */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-transparent pointer-events-none opacity-50" />
-
-                  {/* Internal Noise Texture for Cozy Feel */}
-                  <div className="absolute inset-0 opacity-[0.05] mix-blend-overlay pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
-
-                  <h1 className="text-6xl lg:text-8xl font-friendly font-bold leading-[1.05] mb-8 tracking-tight text-text drop-shadow-2xl relative z-10">
-                    The No-Streaks <br />
-                    <span className="text-primary relative inline-block drop-shadow-sm">
-                      Habit Tracker
-                      <svg
-                        className="absolute w-full h-4 -bottom-2 left-0 text-primary/40 drop-shadow-lg"
-                        viewBox="0 0 100 10"
-                        preserveAspectRatio="none"
-                      >
-                        <path
-                          d="M0 5 Q 50 10 100 5"
-                          stroke="currentColor"
-                          strokeWidth="8"
-                          fill="none"
-                        />
-                      </svg>
-                    </span>
-                  </h1>
-
-                  <p className="text-xl lg:text-2xl text-text-secondary leading-relaxed max-w-lg font-medium drop-shadow-md relative z-10">
-                    Instead of a fragile chain, Sona tracks your Consistency
-                    Score. Miss a day? Your score dips slightly (e.g., 95% →
-                    93%), but it doesn't reset to zero. You never lose your
-                    progress.
-                  </p>
-                </div>
+                <p className="text-xl text-[#6b6560] leading-relaxed mb-10 max-w-xl">
+                  Sona replaces streaks with a rolling consistency score and
+                  flexible goals (daily, weekly, or monthly). Miss a day? You
+                  still make progress—with optional rest days that keep you on
+                  track instead of starting over.
+                </p>
 
                 <div className="flex flex-col sm:flex-row gap-4">
                   <a
                     href="#download"
-                    className="inline-flex items-center justify-center px-8 py-4 rounded-2xl bg-primary text-white font-bold text-lg hover:bg-primary/90 transition-all shadow-[8px_8px_16px_rgba(0,0,0,0.3),-4px_-4px_12px_rgba(255,255,255,0.05)] hover:shadow-[4px_4px_8px_rgba(0,0,0,0.3),-2px_-2px_6px_rgba(255,255,255,0.05)] hover:translate-y-[1px] active:shadow-[inset_4px_4px_8px_rgba(0,0,0,0.2)]"
+                    className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-[#2d2a26] text-white font-semibold hover:bg-[#3d3a36] transition-colors shadow-xl shadow-amber-900/10"
                   >
-                    Download for iOS
+                    <Icon icon="simple-icons:apple" className="w-5 h-5" />
+                    Get the beta
                   </a>
                 </div>
-
-                <div className="mt-12 flex items-center gap-4 text-sm text-text-tertiary">
-                  <div className="flex -space-x-2">
-                    {[1, 2, 3, 4].map((i) => (
-                      <div
-                        key={i}
-                        className="w-8 h-8 rounded-full bg-surface-secondary border-2 border-background flex items-center justify-center text-[10px] shadow-lg"
-                      >
-                        👤
-                      </div>
-                    ))}
-                  </div>
-                  <p className="drop-shadow-md">Join 1,000+ early users</p>
-                </div>
               </motion.div>
-            </motion.div>
 
-            <motion.div style={{ y: phoneY }}>
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="relative h-[700px] flex items-center justify-center lg:justify-end"
+                transition={{ duration: 0.6, delay: 0.2 }}
+                className="flex items-start justify-center lg:justify-end"
               >
-                {/* Mascot & Phone Composition */}
-                <div className="relative z-10 w-[320px]">
-                  {/* Glow behind phone */}
-                  <div className="absolute inset-0 bg-primary/20 blur-[60px] rounded-full scale-110" />
-
-                  <div className="relative rounded-[3rem] border-[8px] border-surface-secondary shadow-2xl overflow-hidden bg-background h-[650px]">
-                    <Image
-                      src="/Screenshot_daily_dark_mode.png"
-                      alt="App Screenshot"
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                </div>
-              </motion.div>
-            </motion.div>
-          </div>
-        </section>
-
-        {/* Feature 1: Rest Days System (Bento Grid) */}
-        <section className="py-24 relative">
-          <div className="max-w-6xl mx-auto px-6 relative z-10">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {/* Large Card: Main Value Prop */}
-              <div className="md:col-span-2 bg-surface-secondary/40 backdrop-blur-xl border border-white/5 rounded-[2.5rem] p-10 relative overflow-hidden group hover:bg-surface-secondary/50 transition-colors duration-500">
-                <div className="absolute top-0 right-0 w-64 h-64 bg-primary/10 blur-[80px] rounded-full -translate-y-1/2 translate-x-1/2" />
-
-                <div className="relative z-10">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-bold mb-6 uppercase tracking-wider">
-                    ✨ The Rest Days System
-                  </div>
-                  <h2 className="text-4xl md:text-5xl font-bold mb-6 text-text leading-tight">
-                    Earned <br />
-                    <span className="text-primary">
-                      Rest Days/Weeks/Months.
-                    </span>
-                  </h2>
-                  <p className="text-lg text-text-secondary leading-relaxed max-w-md">
-                    Consistency earns you "Rest Tokens". Spend them to take a
-                    guilt-free break without breaking your streak.
-                  </p>
-                </div>
-
-                <div className="absolute bottom-0 right-0 translate-x-1/4 translate-y-1/4 opacity-50 group-hover:opacity-80 transition-opacity duration-500">
-                  <Pebble
-                    color="var(--color-blob-2)"
-                    className="w-64 h-64"
-                    speed={0.05}
+                <div className="w-full max-w-md lg:max-w-lg h-[75vh]">
+                  <img
+                    src="/daily.png"
+                    alt="Sona daily view"
+                    className="block w-full h-full object-contain"
+                    loading="eager"
                   />
                 </div>
-              </div>
+              </motion.div>
+            </div>
+          </div>
+        </section>
 
-              {/* Tall Card: Visual Demo */}
-              <div className="bg-surface/60 backdrop-blur-xl border border-white/5 rounded-[2.5rem] p-8 flex flex-col items-center justify-center relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-primary/5" />
-                <GraceDemo />
-                <p className="mt-6 text-center text-sm text-text-tertiary font-medium">
-                  Bank up to 3 tokens
+        {/* Consistency Score */}
+        <section className="py-24 px-6 border-t border-amber-900/5">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div className="text-left">
+                <p className="text-sm font-semibold text-[#4a6fa5] uppercase tracking-wider mb-3">
+                  Consistency over streaks
                 </p>
-              </div>
-
-              {/* Small Card 1: Benefit */}
-              <div className="bg-surface-secondary/40 backdrop-blur-xl border border-white/5 rounded-[2rem] p-8 flex flex-col justify-between group hover:-translate-y-1 transition-transform duration-300">
-                <div className="w-12 h-12 rounded-2xl bg-success/20 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
-                  🧘‍♀️
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-text mb-2">
-                    Guilt-Free
-                  </h3>
-                  <p className="text-sm text-text-secondary">
-                    Take a break without the shame spiral.
-                  </p>
-                </div>
-              </div>
-
-              {/* Small Card 2: Benefit */}
-              <div className="bg-surface-secondary/40 backdrop-blur-xl border border-white/5 rounded-[2rem] p-8 flex flex-col justify-between group hover:-translate-y-1 transition-transform duration-300">
-                <div className="w-12 h-12 rounded-2xl bg-warning/20 flex items-center justify-center text-2xl mb-4 group-hover:scale-110 transition-transform">
-                  🍕
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-text mb-2">
-                    Cheat Days
-                  </h3>
-                  <p className="text-sm text-text-secondary">
-                    Perfect for diet breaks or study days off.
-                  </p>
-                </div>
-              </div>
-
-              {/* Wide Card: Stat */}
-              <div className="md:col-span-1 bg-surface-secondary/40 backdrop-blur-xl border border-white/5 rounded-[2rem] p-8 flex flex-col justify-center items-center text-center relative overflow-hidden group">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <div className="text-5xl font-bold text-text mb-2">3x</div>
-                <p className="text-sm text-text-secondary">
-                  Max tokens you can bank
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
+                  No more &ldquo;all‑or‑nothing&rdquo; streaks.
+                </h2>
+                <p className="text-lg text-[#6b6560] leading-relaxed mb-6 max-w-xl">
+                  People told us streaks create &ldquo;streak guilt&rdquo; and
+                  make them quit the moment a streak breaks. Consistency fixes
+                  that. Your score is a rolling average of how close you get to
+                  your target each day, week, or month—so progress still counts,
+                  even when life gets in the way.
                 </p>
+                <ul className="space-y-3 text-[#6b6560] max-w-xl">
+                  <li className="flex items-start gap-3 leading-relaxed">
+                    <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-[#4a9a7c]" />
+                    <span>
+                      Each period earns partial credit, not a reset to zero.
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3 leading-relaxed">
+                    <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-[#4a6fa5]" />
+                    <span>Rest days don&rsquo;t count against you.</span>
+                  </li>
+                  <li className="flex items-start gap-3 leading-relaxed">
+                    <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-amber-500" />
+                    <span>
+                      You can compare your score month‑over‑month instead of
+                      chasing a fragile streak.
+                    </span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="grid sm:grid-cols-3 gap-6 justify-items-center">
+                {[
+                  {
+                    src: "/score-needs-work.png",
+                    label: "Needs Work",
+                    sub: "Under 70%",
+                  },
+                  { src: "/score-good.png", label: "Good", sub: "70–89%" },
+                  {
+                    src: "/score-excellent.png",
+                    label: "Excellent",
+                    sub: "90%+",
+                  },
+                ].map((item) => (
+                  <div key={item.label} className="text-center">
+                    <div
+                      style={{ aspectRatio: "10 / 16" }}
+                      className="relative max-h-[620px] w-full max-w-[320px] mx-auto rounded-3xl overflow-hidden"
+                    >
+                      <Image
+                        src={item.src}
+                        alt={`${item.label} consistency score`}
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+                    <div className="mt-3 text-sm font-semibold">
+                      {item.label}
+                    </div>
+                    <div className="text-xs text-[#6b6560]">{item.sub}</div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
         </section>
 
-        {/* Feature 2: Focus Today */}
-        <section className="py-24 relative">
-          <Pebble
-            color="var(--color-blob-3)"
-            className="w-[500px] h-[500px] bottom-0 right-[-100px]"
-            initialRotation={-20}
-            speed={-0.12}
-          />
+        {/* Rest Days */}
+        <section className="py-24 px-6 bg-[#f5f0e8]/50 border-y border-amber-900/5">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <div className="text-left">
+                <p className="text-sm font-semibold text-[#4a9a7c] uppercase tracking-wider mb-3">
+                  Guilt‑free rest
+                </p>
+                <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
+                  Take a guilt‑free break without breaking your progress.
+                </h2>
+                <p className="text-lg text-[#6b6560] leading-relaxed mb-6 max-w-xl">
+                  People told us streaks feel &ldquo;all‑or‑nothing&rdquo; and
+                  create &ldquo;streak guilt.&rdquo; Rest days fix that. You can
+                  pause without harming your metrics—no reset, no shame.
+                </p>
+                <ul className="space-y-3 text-[#6b6560] max-w-xl">
+                  <li className="flex items-start gap-3 leading-relaxed">
+                    <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-[#4a9a7c]" />
+                    <span>
+                      Rest days aren&rsquo;t earned—they&rsquo;re always
+                      available when you need them.
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3 leading-relaxed">
+                    <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-[#4a6fa5]" />
+                    <span>
+                      You can&rsquo;t take two in a row, so breaks stay
+                      balanced.
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-3 leading-relaxed">
+                    <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-amber-500" />
+                    <span>Works the same for rest weeks and rest months.</span>
+                  </li>
+                </ul>
+              </div>
 
-          <div className="max-w-6xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center relative z-10">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-bold mb-6 text-text">
-                Flexible <br />
-                <span className="text-accent-blue">Frequency.</span>
+              <div className="grid sm:grid-cols-2 gap-4 justify-items-center">
+                {[
+                  { src: "/rest-day-confirm.png", label: "Confirmation" },
+                  { src: "/rest-day.png", label: "Rest day" },
+                ].map((item) => (
+                  <div key={item.label} className="text-center w-full">
+                    <div
+                      style={{ aspectRatio: "10 / 16" }}
+                      className="relative w-full max-w-[360px] sm:max-w-[320px] md:max-w-[340px] lg:max-w-[360px] mx-auto rounded-3xl overflow-hidden"
+                    >
+                      <Image
+                        src={item.src}
+                        alt={`${item.label} screen`}
+                        fill
+                        className="object-contain"
+                      />
+                    </div>
+                    <div className="mt-3 text-sm font-semibold">
+                      {item.label}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Frequency Groups */}
+        <section className="py-20 px-6">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-left md:text-center mb-12">
+              <p className="text-sm font-semibold text-[#4a9a7c] uppercase tracking-wider mb-3">
+                Group by daily, weekly, or monthly
+              </p>
+              <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
+                Habits that fit real life
               </h2>
-              <p className="text-lg text-text-secondary leading-relaxed mb-8">
-                You don't have to do things every day. You can set a goal like
-                "Gym 3x per week" or "Read 10x per month." It tracks the volume,
-                not the specific dates.
+              <p className="text-lg text-[#6b6560] max-w-2xl md:mx-auto">
+                Stop feeling behind. When your habits match their natural
+                rhythm, you build consistency without burnout. Daily stays
+                lightweight, weekly feels flexible, and monthly keeps long‑term
+                goals alive.
               </p>
             </div>
-            <div>
-              <FocusDemo />
-            </div>
-          </div>
-        </section>
 
-        {/* Feature 3: Stats & Context */}
-        <section className="py-24 bg-surface-secondary/50 relative overflow-hidden">
-          <div className="max-w-6xl mx-auto px-6 text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6 text-text">
-              Visualize your history
-            </h2>
-            <p className="text-lg text-text-secondary max-w-2xl mx-auto">
-              Visualize monthly, quarterly, and annual performance history with
-              beautiful, intuitive grids.
-            </p>
-          </div>
-
-          <div className="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-8">
-            {[
-              {
-                title: "Performance Grids",
-                desc: "Visualize monthly, quarterly, and annual history with beautiful grids.",
-                icon: "📅",
-              },
-              {
-                title: "Precise Percentages",
-                desc: "See your precise monthly performance as a percentage.",
-                icon: "📊",
-              },
-              {
-                title: "Intuitive History",
-                desc: "Track your consistency over time with clear visualizations.",
-                icon: "🔥",
-              },
-            ].map((feature, i) => (
-              <motion.div
-                key={i}
-                whileHover={{ y: -5 }}
-                className="bg-surface p-8 rounded-3xl shadow-lg border border-white/5 hover:border-primary/20 transition-all"
-              >
-                <div className="text-4xl mb-4">{feature.icon}</div>
-                <h3 className="text-xl font-bold mb-2 text-text">
-                  {feature.title}
-                </h3>
-                <p className="text-text-secondary">{feature.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </section>
-
-        {/* The Basics Grid */}
-        <section className="py-24">
-          <div className="max-w-6xl mx-auto px-6">
-            <h2 className="text-3xl font-bold mb-12 text-center text-text">
-              Everything you need
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid md:grid-cols-3 gap-10 justify-items-center">
               {[
-                {
-                  title: "Smart Reminders",
-                  desc: "Set custom notifications for each habit so you never miss a beat.",
-                  icon: "🔔",
-                },
-                {
-                  title: "Flexible Categories",
-                  desc: "Group habits by area of life or goal to keep your tracking organized.",
-                  icon: "📂",
-                },
-                {
-                  title: "Detailed Stats",
-                  desc: "Dive deep into your performance with streaks, completion rates, and history.",
-                  icon: "📊",
-                },
-                {
-                  title: "CSV Export/Import",
-                  desc: "Your data belongs to you. Export your full history to CSV anytime.",
-                  icon: "📥",
-                },
-                {
-                  title: "Privacy First",
-                  desc: "All your data stays locally on your device. No account required.",
-                  icon: "🔒",
-                },
-                {
-                  title: "Offline Ready",
-                  desc: "Track your habits anywhere, even without an internet connection.",
-                  icon: "⚡",
-                },
+                { src: "/daily.png", label: "Daily" },
+                { src: "/weekly.png", label: "Weekly" },
+                { src: "/monthly.png", label: "Monthly" },
               ].map((item, i) => (
-                <div
-                  key={i}
-                  className="flex flex-col items-start p-6 bg-surface-secondary/30 rounded-2xl hover:bg-surface-secondary transition-colors h-full"
+                <motion.div
+                  key={item.label}
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.08 }}
+                  className="text-center w-full max-w-[360px]"
                 >
-                  <span className="text-3xl mb-4 bg-surface w-12 h-12 flex items-center justify-center rounded-xl shadow-inner border border-white/5">
-                    {item.icon}
-                  </span>
-                  <h3 className="font-bold text-lg text-text mb-2">
-                    {item.title}
-                  </h3>
-                  <p className="text-text-secondary text-sm leading-relaxed">
-                    {item.desc}
-                  </p>
-                </div>
+                  <div
+                    style={{ aspectRatio: "10 / 16" }}
+                    className="relative w-full mx-auto rounded-3xl overflow-hidden"
+                  >
+                    <Image
+                      src={item.src}
+                      alt={`${item.label} habits view`}
+                      fill
+                      className="object-contain"
+                    />
+                  </div>
+                  <div className="mt-3 text-sm font-semibold text-[#2d2a26]">
+                    {item.label}
+                  </div>
+                </motion.div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* CTA Section */}
-        <section id="download" className="py-32 relative overflow-hidden">
-          <div className="absolute inset-0 bg-primary/5" />
-          <Pebble
-            color="var(--color-blob-1)"
-            className="w-[800px] h-[800px] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-            initialRotation={0}
-            speed={0.05}
-          />
+        {/* Habit Grid Demo */}
+        <section className="py-20 px-6 border-t border-amber-900/5">
+          <div className="max-w-6xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-[2.5rem] p-10 md:p-14 border border-amber-100 shadow-xl shadow-amber-900/5"
+            >
+              <div className="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                  <p className="text-sm font-semibold text-[#4a6fa5] uppercase tracking-wider mb-3">
+                    Your Month at a Glance
+                  </p>
+                  <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                    Track progress, not perfection
+                  </h2>
+                  <p className="text-[#6b6560] leading-relaxed">
+                    Every day matters, but not every day needs to be perfect.
+                    Your consistency score adjusts gradually — no dramatic
+                    resets.
+                  </p>
+                </div>
+                <div className="flex flex-col gap-6">
+                  <div>
+                    <p className="text-sm font-medium text-[#4a6fa5] mb-3">
+                      Drink Water
+                    </p>
+                    <HabitGrid color="blue" rows={3} cols={10} />
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-[#4a9a7c] mb-3">
+                      Go For a Walk
+                    </p>
+                    <HabitGrid
+                      color="green"
+                      rows={3}
+                      cols={10}
+                      pattern={[
+                        [2, 1, 2, 2, 1, 2, 2, 2, 1, 2],
+                        [2, 2, 1, 1, 2, 2, 2, 2, 2, 2],
+                        [1, 2, 2, 2, 2, 1, 2, 2, 2, 2],
+                      ]}
+                    />
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </section>
 
-          <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
-            <h2 className="text-5xl md:text-6xl font-bold mb-8 text-text tracking-tight">
-              Ready to build <br /> better habits?
-            </h2>
-            <p className="text-xl text-text-secondary mb-10 max-w-xl mx-auto">
-              Join the community and start your journey with Sona today.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="px-10 py-5 rounded-full bg-text text-white font-bold text-xl hover:scale-105 transition-transform shadow-2xl flex items-center gap-3">
-                <svg
-                  className="w-6 h-6"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.74 1.18 0 2.21-.93 3.69-.74 2.4.29 4.18 1.45 4.93 2.5-4.12 2.5-3.41 7.56 1.3 9.46zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
-                </svg>
-                Download on App Store
-              </button>
+        {/* Benefits */}
+        <section
+          id="features"
+          className="py-24 px-6 bg-[#f5f0e8]/50 border-y border-amber-900/5"
+        >
+          <div className="max-w-6xl mx-auto">
+            <div className="text-left md:text-center mb-16">
+              <p className="text-sm font-semibold text-[#4a9a7c] uppercase tracking-wider mb-3">
+                Everything you&rsquo;d expect, done beautifully
+              </p>
+              <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
+                Standard features
+              </h2>
             </div>
-            <p className="mt-8 text-sm text-text-tertiary">
-              Free to start. No credit card required.
-            </p>
+
+            <div className="grid md:grid-cols-3 gap-8">
+              {benefits.map((b, i) => (
+                <motion.div
+                  key={b.title}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="p-8 rounded-3xl bg-white border border-amber-100 shadow-lg shadow-amber-900/5"
+                >
+                  <div
+                    className={`inline-flex items-center justify-center w-14 h-14 rounded-2xl ${b.color} mb-5`}
+                  >
+                    <Icon icon={b.icon} className="w-7 h-7" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-2">{b.title}</h3>
+                  <p className="text-[#6b6560] leading-relaxed">{b.desc}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section
+          id="download"
+          className="py-24 px-6 border-t border-amber-900/5"
+        >
+          <div className="max-w-5xl mx-auto">
+            <div className="relative rounded-[2.5rem] overflow-hidden bg-linear-to-br from-[#4a6fa5]/10 via-[#4a9a7c]/10 to-amber-100/50 border border-[#4a6fa5]/20 p-12 md:p-16 text-center">
+              <div className="absolute top-4 left-4 w-20 h-20 rounded-full bg-[#4a6fa5]/10 blur-xl" />
+              <div className="absolute bottom-4 right-4 w-32 h-32 rounded-full bg-[#4a9a7c]/10 blur-xl" />
+
+              <div className="relative">
+                <h2 className="text-4xl md:text-5xl font-bold mb-6">
+                  Ready to be kinder
+                  <br />
+                  to yourself?
+                </h2>
+                <p className="text-xl text-[#6b6560] mb-10 max-w-lg mx-auto">
+                  Start building habits that actually stick — without the guilt.
+                </p>
+                <a
+                  href="https://apps.apple.com"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-3 px-10 py-5 rounded-2xl bg-[#2d2a26] text-white font-bold text-lg hover:bg-[#3d3a36] transition-colors shadow-xl shadow-amber-900/10"
+                >
+                  <Icon icon="simple-icons:apple" className="w-6 h-6" />
+                  Get the beta
+                </a>
+              </div>
+            </div>
           </div>
         </section>
       </main>
 
-      <footer className="py-12 bg-background-secondary border-t border-white/5">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="flex items-center gap-2 opacity-80">
-            <span className="font-bold text-xl tracking-tight text-text">
-              sona
-            </span>
+      {/* Footer */}
+      <footer className="py-12 border-t border-amber-900/5">
+        <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 rounded-xl bg-linear-to-br from-amber-400 to-orange-400 flex items-center justify-center">
+              <span className="text-white text-sm">☀️</span>
+            </div>
+            <span className="font-bold">Sona</span>
           </div>
-          <div className="flex gap-8 text-sm text-text-secondary">
-            <a href="#" className="hover:text-text">
+          <div className="flex gap-8 text-sm text-[#6b6560]">
+            <a href="#" className="hover:text-[#2d2a26]">
               Privacy
             </a>
-            <a href="#" className="hover:text-text">
+            <a href="#" className="hover:text-[#2d2a26]">
               Terms
             </a>
-            <a href="#" className="hover:text-text">
+            <a href="#" className="hover:text-[#2d2a26]">
               Twitter
             </a>
           </div>
-          <p className="text-text-tertiary text-sm">© 2025 Sona.</p>
+          <p className="text-[#6b6560] text-sm">© 2026 Sona.</p>
         </div>
       </footer>
     </div>
