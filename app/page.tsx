@@ -26,8 +26,26 @@ const highlights = [
 ];
 
 export default function Version1() {
+  const feedbackUrl = "";
+
   return (
     <div className="min-h-screen bg-[#fffbf7] text-[#2d2a26] font-sans selection:bg-amber-200 overflow-x-hidden">
+      {/* Beta feedback banner */}
+      <div className="fixed top-0 left-0 right-0 z-[60] bg-[#2d2a26] text-white">
+        <div className="mx-auto w-full max-w-6xl px-6 py-2 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-sm">
+          <span className="font-semibold">Beta feedback</span>
+          <span className="text-white/80">
+            Report a bug or request a feature.
+          </span>
+          <a
+            href={feedbackUrl}
+            className="underline underline-offset-4 text-white"
+            aria-disabled={feedbackUrl === ""}
+          >
+            Open feedback board
+          </a>
+        </div>
+      </div>
       {/* Warm background gradients */}
       <div className="fixed inset-0 pointer-events-none">
         <div className="absolute top-0 right-0 w-[70%] h-[60%] bg-linear-to-bl from-amber-100/50 via-transparent to-transparent" />
@@ -84,7 +102,7 @@ export default function Version1() {
       </div>
 
       {/* Nav */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-[#fffbf7]/80 backdrop-blur-xl border-b border-amber-900/5">
+      <header className="fixed top-10 left-0 right-0 z-50 bg-[#fffbf7]/80 backdrop-blur-xl border-b border-amber-900/5">
         <div className="mx-auto w-full max-w-6xl px-6 min-h-16 py-3 sm:py-0 flex items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-3">
             <div className="relative w-9 h-9">
@@ -102,7 +120,7 @@ export default function Version1() {
               </span>
             </span>
           </Link>
-          <nav className="hidden md:flex items-center gap-8 text-sm text-[#6b6560]" />
+          <nav className="hidden md:flex items-center gap-6 text-sm text-[#6b6560]" />
           <a
             href="#download"
             className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-[#2d2a26] text-white text-sm font-semibold hover:bg-[#3d3a36] transition-colors shadow-xl shadow-amber-900/10 sm:gap-3 sm:px-6 sm:py-2.5 sm:rounded-2xl"
@@ -114,7 +132,7 @@ export default function Version1() {
         </div>
       </header>
 
-      <main className="relative z-10 pt-16">
+      <main className="relative z-10 pt-[104px]">
         {/* Hero */}
         <section className="pt-24 pb-32">
           <div className="mx-auto w-full max-w-6xl px-6">
@@ -398,12 +416,29 @@ export default function Version1() {
               Support
             </Link>
             <a
-              href="https://twitter.com"
+              href={feedbackUrl}
               className="hover:text-[#2d2a26]"
+              aria-disabled={feedbackUrl === ""}
+            >
+              Feedback
+            </a>
+            <a
+              href="https://www.reddit.com/r/SonaHabits/"
+              className="inline-flex items-center hover:text-[#2d2a26]"
               target="_blank"
               rel="noreferrer"
+              aria-label="Sona Habits on Reddit"
             >
-              Twitter
+              <Icon icon="simple-icons:reddit" className="w-4 h-4" />
+            </a>
+            <a
+              href="https://x.com/sonahabits"
+              className="inline-flex items-center hover:text-[#2d2a26]"
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Sona Habits on X"
+            >
+              <Icon icon="simple-icons:x" className="w-4 h-4" />
             </a>
           </div>
           <p className="text-[#6b6560] text-sm">© 2026 Sona.</p>
