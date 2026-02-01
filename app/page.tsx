@@ -387,14 +387,22 @@ export default function Version1() {
               </span>
             </span>
           </div>
-          <div className="flex gap-8 text-sm text-[#6b6560]">
-            <a href="#" className="hover:text-[#2d2a26]">
+          <div className="flex flex-wrap justify-center md:justify-end gap-x-6 gap-y-2 text-sm text-[#6b6560]">
+            <Link href="/privacy" className="hover:text-[#2d2a26]">
               Privacy
-            </a>
-            <a href="#" className="hover:text-[#2d2a26]">
+            </Link>
+            <Link href="/terms" className="hover:text-[#2d2a26]">
               Terms
-            </a>
-            <a href="#" className="hover:text-[#2d2a26]">
+            </Link>
+            <Link href="/support" className="hover:text-[#2d2a26]">
+              Support
+            </Link>
+            <a
+              href="https://twitter.com"
+              className="hover:text-[#2d2a26]"
+              target="_blank"
+              rel="noreferrer"
+            >
               Twitter
             </a>
           </div>
