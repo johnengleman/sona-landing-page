@@ -235,7 +235,7 @@ export function CircleProgress({
           className="text-gray-200"
         />
         {/* Progress circle */}
-        <motion.circle
+        <circle
           cx={size / 2}
           cy={size / 2}
           r={radius}
@@ -244,10 +244,7 @@ export function CircleProgress({
           strokeWidth={strokeWidth}
           strokeLinecap="round"
           strokeDasharray={circumference}
-          initial={{ strokeDashoffset: circumference }}
-          whileInView={{ strokeDashoffset: offset }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, ease: "easeOut" }}
+          strokeDashoffset={offset}
         />
       </svg>
       {children && (

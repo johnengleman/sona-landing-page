@@ -24,9 +24,9 @@ export const metadata: Metadata = {
   description:
     "Build habits that survive real life. Sona tracks consistency (not fragile streaks) and lets you earn rest days so one missed day doesn’t erase your progress.",
   icons: {
-    icon: "/logo_small.png",
-    shortcut: "/logo_small.png",
-    apple: "/logo_small.png",
+    icon: "/icon.png",
+    shortcut: "/icon.png",
+    apple: "/icon.png",
   },
 };
 
