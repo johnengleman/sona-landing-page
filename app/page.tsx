@@ -213,8 +213,8 @@ export default function Version1() {
 
         {/* Why it works */}
         <section className="py-20 border-t border-amber-900/5">
-          <div className="mx-auto w-full max-w-5xl px-6">
-            <div className="text-left md:text-center mb-12">
+          <div className="mx-auto w-full max-w-5xl px-0 sm:px-6">
+            <div className="text-left md:text-center mb-12 px-6 sm:px-0">
               <p className="text-sm font-semibold text-[#4a6fa5] uppercase tracking-wider mb-3">
                 Why it works
               </p>
@@ -222,42 +222,44 @@ export default function Version1() {
                 Built to help you follow through
               </h2>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 gap-8">
               {highlights.map((item) => (
                 <div
                   key={item.title}
-                  className="p-8 rounded-3xl bg-white border border-amber-100 shadow-lg shadow-amber-900/5"
+                  className="p-6 pb-0 sm:p-8 sm:pb-0 rounded-3xl bg-white border border-amber-100 shadow-lg shadow-amber-900/5"
                 >
                   <h3 className="text-xl font-bold mb-2">{item.title}</h3>
                   <p className="text-[#6b6560] leading-relaxed">{item.desc}</p>
                   {item.title === "Consistency over streaks" ? (
-                    <div className="mt-6 grid gap-4">
+                    <div className="mt-6 grid grid-cols-2 gap-4">
                       <img
                         src="/consistency-1.png"
                         alt="Consistency over streaks screenshot 1"
-                        width={640}
-                        height={360}
+                        className="w-[98%] sm:w-[80%] h-auto object-contain mx-auto"
                       />
                       <img
                         src="/consistency-2.png"
                         alt="Consistency over streaks screenshot 2"
-                        width={640}
-                        height={360}
+                        className="w-[98%] sm:w-[80%] h-auto object-contain mx-auto translate-y-[3px]"
                       />
                     </div>
                   ) : item.title === "Rest days that protect momentum" ? (
-                    <div className="mt-6 grid gap-4">
+                    <div className="mt-6 grid grid-cols-2 gap-4">
                       <img
                         src="/rest-1.png"
                         alt="Rest days screenshot 1"
-                        width={640}
-                        height={360}
+                        className="w-[98%] sm:w-[80%] h-auto object-contain mx-auto self-end"
+                        style={{
+                          WebkitMaskImage:
+                            "linear-gradient(to bottom, transparent 0%, black 30%)",
+                          maskImage:
+                            "linear-gradient(to bottom, transparent 0%, black 30%)",
+                        }}
                       />
                       <img
                         src="/rest-2.png"
                         alt="Rest days screenshot 2"
-                        width={640}
-                        height={360}
+                        className="w-[98%] sm:w-[80%] h-auto object-contain mx-auto"
                       />
                     </div>
                   ) : null}
@@ -283,11 +285,10 @@ export default function Version1() {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-10">
+            <div className="grid md:grid-cols-[minmax(0,30%)_minmax(0,30%)] md:justify-center gap-10">
               {[
                 { src: "/stats-1.png", label: "Statistics screenshot 1" },
                 { src: "/stats-2.png", label: "Statistics screenshot 2" },
-                { src: "/stats-3.png", label: "Statistics screenshot 3" },
               ].map((item) => (
                 <div key={item.label} className="text-center">
                   <Image
@@ -318,7 +319,7 @@ export default function Version1() {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-3 gap-10 justify-items-center">
+            <div className="grid grid-cols-1 md:grid-cols-[repeat(3,minmax(0,30%))] md:justify-center gap-10">
               {[
                 { src: "/daily.png", label: "Daily" },
                 { src: "/weekly.png", label: "Weekly" },
@@ -330,14 +331,14 @@ export default function Version1() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.08 }}
-                  className="text-center w-full max-w-[360px]"
+                  className="text-center w-full"
                 >
                   <div className="mb-4 text-lg font-bold tracking-wide text-[#2d2a26]">
                     {item.label}
                   </div>
                   <div
                     style={{ aspectRatio: "10 / 16" }}
-                    className="relative w-full mx-auto rounded-3xl overflow-hidden"
+                    className="relative w-full rounded-3xl overflow-hidden"
                   >
                     <Image
                       src={item.src}
