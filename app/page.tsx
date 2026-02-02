@@ -26,7 +26,7 @@ const highlights = [
 ];
 
 export default function Version1() {
-  const feedbackUrl = "";
+  const feedbackUrl = "https://sonahabitsapp.userjot.com/";
 
   return (
     <div
@@ -39,8 +39,8 @@ export default function Version1() {
       }
     >
       {/* Beta feedback banner */}
-      <div className="fixed top-0 left-0 right-0 z-[60] bg-[#2d2a26] text-white">
-        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 py-2.5 sm:py-2 flex flex-col sm:flex-row items-center justify-center gap-x-4 gap-y-1 text-[13px] sm:text-sm text-center sm:text-left">
+      <div className="fixed top-0 left-0 right-0 z-[60] bg-[#2d2a26] text-white h-[var(--banner-height)] sm:h-[var(--banner-height-sm)]">
+        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 h-full flex flex-col sm:flex-row items-center justify-center gap-x-4 gap-y-1 text-[13px] sm:text-sm text-center sm:text-left">
           <span className="font-semibold">Beta feedback</span>
           <span className="text-white/80">
             Report a bug or request a feature.
@@ -111,7 +111,7 @@ export default function Version1() {
 
       {/* Nav */}
       <header className="fixed top-[var(--banner-height)] sm:top-[var(--banner-height-sm)] left-0 right-0 z-50 bg-[#fffbf7]/80 backdrop-blur-xl border-b border-amber-900/5">
-        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 min-h-20 sm:min-h-16 py-4 sm:py-0 flex flex-row items-center justify-between gap-4">
+        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 min-h-14 sm:min-h-16 py-2 sm:py-0 flex flex-row items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-3">
             <div className="relative w-9 h-9">
               <Image
@@ -140,9 +140,9 @@ export default function Version1() {
         </div>
       </header>
 
-      <main className="relative z-10 pt-[calc(var(--banner-height)+96px)] sm:pt-[calc(var(--banner-height-sm)+64px)]">
+      <main className="relative z-10 pt-[calc(var(--banner-height)+56px)] sm:pt-[calc(var(--banner-height-sm)+64px)]">
         {/* Hero */}
-        <section className="pt-12 sm:pt-24 pb-16 sm:pb-32">
+        <section className="pt-8 sm:pt-24 pb-16 sm:pb-32">
           <div className="mx-auto w-full max-w-6xl px-6">
             <div className="grid lg:grid-cols-[1fr_1.15fr] gap-16 items-start">
               <motion.div
@@ -417,7 +417,7 @@ export default function Version1() {
               </span>
             </span>
           </div>
-          <div className="flex flex-wrap justify-center md:justify-end gap-x-6 gap-y-2 text-sm text-[#6b6560]">
+          <div className="flex flex-wrap items-center justify-center md:justify-end gap-x-6 gap-y-2 text-sm text-[#6b6560]">
             <Link href="/privacy" className="hover:text-[#2d2a26]">
               Privacy
             </Link>
@@ -434,24 +434,26 @@ export default function Version1() {
             >
               Feedback
             </a>
-            <a
-              href="https://www.reddit.com/r/SonaHabits/"
-              className="inline-flex items-center hover:text-[#2d2a26]"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Sona Habits on Reddit"
-            >
-              <Icon icon="simple-icons:reddit" className="w-4 h-4" />
-            </a>
-            <a
-              href="https://x.com/sonahabits"
-              className="inline-flex items-center hover:text-[#2d2a26]"
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Sona Habits on X"
-            >
-              <Icon icon="simple-icons:x" className="w-4 h-4" />
-            </a>
+            <div className="flex w-full justify-center md:w-auto md:justify-end gap-6 mt-2 sm:mt-0">
+              <a
+                href="https://www.reddit.com/r/SonaHabits/"
+                className="inline-flex items-center hover:text-[#2d2a26] align-middle"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Sona Habits on Reddit"
+              >
+                <Icon icon="simple-icons:reddit" className="w-4 h-4" />
+              </a>
+              <a
+                href="https://x.com/sonahabits"
+                className="inline-flex items-center hover:text-[#2d2a26] align-middle"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Sona Habits on X"
+              >
+                <Icon icon="simple-icons:x" className="w-4 h-4" />
+              </a>
+            </div>
           </div>
           <p className="text-[#6b6560] text-sm">© 2026 Sona.</p>
         </div>
