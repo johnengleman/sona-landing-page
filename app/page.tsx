@@ -48,7 +48,6 @@ export default function Version1() {
           <a
             href={feedbackUrl}
             className="underline underline-offset-4 text-white inline-flex"
-            aria-disabled={feedbackUrl === ""}
           >
             Open feedback board
           </a>
@@ -427,11 +426,7 @@ export default function Version1() {
             <Link href="/support" className="hover:text-[#2d2a26]">
               Support
             </Link>
-            <a
-              href={feedbackUrl}
-              className="hover:text-[#2d2a26]"
-              aria-disabled={feedbackUrl === ""}
-            >
+            <a href={feedbackUrl} className="hover:text-[#2d2a26]">
               Feedback
             </a>
             <div className="flex w-full justify-center md:w-auto md:justify-end gap-6 mt-2 sm:mt-0">
