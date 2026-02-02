@@ -17,11 +17,11 @@ import { ParallaxPill } from "./components/Pill";
 const highlights = [
   {
     title: "Consistency over streaks",
-    desc: "A rolling score rewards real progress instead of all‑or‑nothing chains.",
+    desc: "A rolling score rewards real progress instead of all‑or‑nothing streaks.",
   },
   {
     title: "Rest days that protect momentum",
-    desc: "Take a break when you need it without resetting your progress.",
+    desc: "Take a break when you need it without losing momentum.",
   },
 ];
 
@@ -29,17 +29,25 @@ export default function Version1() {
   const feedbackUrl = "";
 
   return (
-    <div className="min-h-screen bg-[#fffbf7] text-[#2d2a26] font-sans selection:bg-amber-200 overflow-x-hidden">
+    <div
+      className="min-h-screen bg-[#fffbf7] text-[#2d2a26] font-sans selection:bg-amber-200 overflow-x-hidden"
+      style={
+        {
+          "--banner-height": "88px",
+          "--banner-height-sm": "40px",
+        } as React.CSSProperties
+      }
+    >
       {/* Beta feedback banner */}
       <div className="fixed top-0 left-0 right-0 z-[60] bg-[#2d2a26] text-white">
-        <div className="mx-auto w-full max-w-6xl px-6 py-2 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-sm">
+        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 py-2.5 sm:py-2 flex flex-col sm:flex-row items-center justify-center gap-x-4 gap-y-1 text-[13px] sm:text-sm text-center sm:text-left">
           <span className="font-semibold">Beta feedback</span>
           <span className="text-white/80">
             Report a bug or request a feature.
           </span>
           <a
             href={feedbackUrl}
-            className="underline underline-offset-4 text-white"
+            className="underline underline-offset-4 text-white inline-flex"
             aria-disabled={feedbackUrl === ""}
           >
             Open feedback board
@@ -102,8 +110,8 @@ export default function Version1() {
       </div>
 
       {/* Nav */}
-      <header className="fixed top-10 left-0 right-0 z-50 bg-[#fffbf7]/80 backdrop-blur-xl border-b border-amber-900/5">
-        <div className="mx-auto w-full max-w-6xl px-6 min-h-16 py-3 sm:py-0 flex items-center justify-between gap-4">
+      <header className="fixed top-[var(--banner-height)] sm:top-[var(--banner-height-sm)] left-0 right-0 z-50 bg-[#fffbf7]/80 backdrop-blur-xl border-b border-amber-900/5">
+        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 min-h-20 sm:min-h-16 py-4 sm:py-0 flex flex-row items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-3">
             <div className="relative w-9 h-9">
               <Image
@@ -113,7 +121,7 @@ export default function Version1() {
                 className="object-contain"
               />
             </div>
-            <span className="flex flex-col leading-tight">
+            <span className="flex flex-col justify-center leading-none">
               <span className="font-bold text-lg">Sona</span>
               <span className="hidden sm:block text-[11px] uppercase tracking-[0.18em] text-[#6b6560] font-medium">
                 the no‑streak habit tracker
@@ -132,9 +140,9 @@ export default function Version1() {
         </div>
       </header>
 
-      <main className="relative z-10 pt-[104px]">
+      <main className="relative z-10 pt-[calc(var(--banner-height)+96px)] sm:pt-[calc(var(--banner-height-sm)+64px)]">
         {/* Hero */}
-        <section className="pt-24 pb-32">
+        <section className="pt-12 sm:pt-24 pb-16 sm:pb-32">
           <div className="mx-auto w-full max-w-6xl px-6">
             <div className="grid lg:grid-cols-[1fr_1.15fr] gap-16 items-start">
               <motion.div
@@ -188,7 +196,7 @@ export default function Version1() {
                   </a>
                 </div>
                 <p className="mt-4 text-sm text-[#6b6560]">
-                  iOS first, Android beta coming next.
+                  iOS first. Android beta coming next.
                 </p>
               </motion.div>
 
@@ -277,7 +285,7 @@ export default function Version1() {
                 Statistics
               </p>
               <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
-                See your progress, clearly
+                See your progress clearly
               </h2>
               <p className="text-lg text-[#6b6560] max-w-2xl md:mx-auto">
                 Track consistency trends and spot what&rsquo;s working at a
@@ -291,12 +299,15 @@ export default function Version1() {
                 { src: "/stats-2.png", label: "Statistics screenshot 2" },
               ].map((item) => (
                 <div key={item.label} className="text-center">
-                  <Image
-                    src={item.src}
-                    alt={item.label}
-                    width={720}
-                    height={480}
-                  />
+                  <div className="mx-auto w-full max-w-[280px] sm:max-w-[420px]">
+                    <Image
+                      src={item.src}
+                      alt={item.label}
+                      width={720}
+                      height={480}
+                      className="w-full h-auto object-contain"
+                    />
+                  </div>
                 </div>
               ))}
             </div>
