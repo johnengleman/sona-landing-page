@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+
+import { Analytics } from "@vercel/analytics/next";
 import { Alegreya_Sans, Fraunces, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
@@ -43,6 +45,7 @@ export default function RootLayout({
         className={`${alegreyaSans.variable} ${geistMono.variable} ${fraunces.variable} antialiased`}
       >
         {children}
+        <Analytics />
       </body>
     </html>
   );
