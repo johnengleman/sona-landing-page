@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { Icon } from "./components/Icon";
+import NoiseOverlay from "./components/NoiseOverlay";
 import { ParallaxPill } from "./components/Pill";
 
 /**
@@ -30,7 +31,7 @@ export default function Version1() {
 
   return (
     <div
-      className="min-h-screen bg-[#fffbf7] text-[#2d2a26] font-sans selection:bg-amber-200 overflow-x-hidden"
+      className="min-h-screen bg-[var(--background)] text-[var(--text)] font-sans selection:bg-[var(--primary-light)] overflow-x-hidden"
       style={
         {
           "--banner-height": "88px",
@@ -38,16 +39,17 @@ export default function Version1() {
         } as React.CSSProperties
       }
     >
+      <NoiseOverlay />
       {/* Beta feedback banner */}
-      <div className="fixed top-0 left-0 right-0 z-[60] bg-[#2d2a26] text-white h-[var(--banner-height)] sm:h-[var(--banner-height-sm)]">
+      <div className="fixed top-0 left-0 right-0 z-[60] bg-[#1f1915] text-[#f7f1e8] h-[var(--banner-height)] sm:h-[var(--banner-height-sm)] border-b border-white/10">
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 h-full flex flex-col sm:flex-row items-center justify-center gap-x-4 gap-y-1 text-[13px] sm:text-sm text-center sm:text-left">
-          <span className="font-semibold">Beta feedback</span>
-          <span className="text-white/80">
+          <span className="font-semibold tracking-wide">Beta feedback</span>
+          <span className="text-[#f7f1e8]/80">
             Report a bug or request a feature.
           </span>
           <a
             href={feedbackUrl}
-            className="underline underline-offset-4 text-white inline-flex"
+            className="underline underline-offset-4 text-[#f7f1e8] inline-flex"
           >
             Open feedback board
           </a>
@@ -55,8 +57,9 @@ export default function Version1() {
       </div>
       {/* Warm background gradients */}
       <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute top-0 right-0 w-[70%] h-[60%] bg-linear-to-bl from-amber-100/50 via-transparent to-transparent" />
-        <div className="absolute bottom-0 left-0 w-[50%] h-[50%] bg-linear-to-tr from-[#4a9a7c]/5 to-transparent" />
+        <div className="absolute -top-[10%] right-[-10%] w-[70%] h-[70%] bg-[radial-gradient(circle_at_center,rgba(212,131,91,0.25),transparent_60%)]" />
+        <div className="absolute top-[15%] left-[-5%] w-[50%] h-[50%] bg-[radial-gradient(circle_at_center,rgba(46,138,122,0.2),transparent_60%)]" />
+        <div className="absolute -bottom-[15%] left-[20%] w-[65%] h-[65%] bg-[radial-gradient(circle_at_center,rgba(227,161,95,0.2),transparent_60%)]" />
       </div>
 
       {/* Parallax Pills Background */}
@@ -109,7 +112,7 @@ export default function Version1() {
       </div>
 
       {/* Nav */}
-      <header className="fixed top-[var(--banner-height)] sm:top-[var(--banner-height-sm)] left-0 right-0 z-50 bg-[#fffbf7]/80 backdrop-blur-xl border-b border-amber-900/5">
+      <header className="fixed top-[var(--banner-height)] sm:top-[var(--banner-height-sm)] left-0 right-0 z-50 bg-[rgba(247,241,232,0.82)] backdrop-blur-xl border-b border-[color:var(--hairline)]">
         <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 min-h-14 sm:min-h-16 py-2 sm:py-0 flex flex-row items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-3">
             <div className="relative w-9 h-9">
@@ -122,15 +125,34 @@ export default function Version1() {
             </div>
             <span className="flex flex-col justify-center leading-none">
               <span className="font-bold text-lg">Sona</span>
-              <span className="hidden sm:block text-[11px] uppercase tracking-[0.18em] text-[#6b6560] font-medium">
+              <span className="hidden sm:block text-[11px] uppercase tracking-[0.22em] text-[var(--text-tertiary)] font-semibold">
                 the no‑streak habit tracker
               </span>
             </span>
           </Link>
-          <nav className="hidden md:flex items-center gap-6 text-sm text-[#6b6560]" />
+          <nav className="hidden md:flex items-center gap-6 text-sm text-[var(--text-secondary)]">
+            <a
+              href="#why"
+              className="hover:text-[var(--text)] transition-colors"
+            >
+              Why it works
+            </a>
+            <a
+              href="#stats"
+              className="hover:text-[var(--text)] transition-colors"
+            >
+              Stats
+            </a>
+            <a
+              href="#screens"
+              className="hover:text-[var(--text)] transition-colors"
+            >
+              Screens
+            </a>
+          </nav>
           <a
             href="#download"
-            className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-[#2d2a26] text-white text-sm font-semibold hover:bg-[#3d3a36] transition-colors shadow-xl shadow-amber-900/10 sm:gap-3 sm:px-6 sm:py-2.5 sm:rounded-2xl"
+            className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-[var(--text)] text-[var(--background)] text-sm font-semibold hover:bg-[#2a231e] transition-colors shadow-xl shadow-[#1f1915]/10 sm:gap-3 sm:px-6 sm:py-2.5 sm:rounded-2xl"
           >
             <Icon icon="simple-icons:apple" className="w-4 h-4" />
             <span className="hidden sm:inline">Get the beta</span>
@@ -141,45 +163,50 @@ export default function Version1() {
 
       <main className="relative z-10 pt-[calc(var(--banner-height)+56px)] sm:pt-[calc(var(--banner-height-sm)+64px)]">
         {/* Hero */}
-        <section className="pt-8 sm:pt-24 pb-16 sm:pb-32">
+        <section className="pt-10 sm:pt-24 pb-16 sm:pb-32">
           <div className="mx-auto w-full max-w-6xl px-6">
-            <div className="grid lg:grid-cols-[1fr_1.15fr] gap-16 items-start">
+            <div className="grid lg:grid-cols-[1.05fr_0.95fr] gap-16 items-start">
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
                 className="text-left"
               >
-                <h1 className="text-5xl md:text-6xl font-bold leading-[1.05] mb-6 tracking-tight">
-                  Build habits without{" "}
-                  <span className="relative inline-block">
-                    <span className="relative z-10">streak guilt</span>
-                    <span className="absolute inset-x-0 -bottom-1 h-[4px] bg-amber-200/70 -z-0 rounded-full" />
+                <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-[color:var(--hairline)] bg-[var(--surface)] text-[11px] uppercase tracking-[0.28em] text-[var(--text-tertiary)] mb-6">
+                  <span className="w-2 h-2 rounded-full bg-[var(--primary)] shadow-[0_0_0_4px_rgba(212,131,91,0.18)]" />
+                  Beta access is open
+                </div>
+                <h1 className="text-5xl md:text-6xl font-bold leading-[1.03] mb-6 tracking-tight">
+                  Consistency without
+                  <span className="relative inline-block ml-2">
+                    <span className="relative z-10">the guilt</span>
+                    <span className="absolute inset-x-0 -bottom-1 h-[6px] bg-[var(--primary-light)] -z-0 rounded-full" />
                   </span>
                   .
                   <br />
-                  <br />
-                  Track{" "}
-                  <span className="relative inline-block">
-                    <span className="relative z-10">consistency,</span>
-                    <svg
-                      className="absolute -bottom-2 left-0 w-full"
-                      viewBox="0 0 200 12"
-                      fill="none"
-                      aria-hidden="true"
-                    >
-                      <path
-                        d="M2 8 Q 100 2 198 8"
-                        stroke="#4a6fa5"
-                        strokeWidth="4"
-                        strokeLinecap="round"
-                      />
-                    </svg>
-                  </span>{" "}
-                  not perfection.
+                  <span className="block mt-3">
+                    A habit tracker built for{" "}
+                    <span className="relative inline-block whitespace-nowrap">
+                      <span className="relative z-10">real life</span>
+                      <svg
+                        className="absolute -bottom-2 left-0 w-full"
+                        viewBox="0 0 200 12"
+                        fill="none"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M2 8 Q 100 2 198 8"
+                          stroke="#2d6c7c"
+                          strokeWidth="4"
+                          strokeLinecap="round"
+                        />
+                      </svg>
+                    </span>
+                    .
+                  </span>
                 </h1>
 
-                <p className="text-xl text-[#6b6560] leading-relaxed mb-10 max-w-xl">
+                <p className="text-xl text-[var(--text-secondary)] leading-relaxed mb-10 max-w-xl">
                   Sona replaces fragile streaks with a rolling consistency score
                   and built‑in rest days—so a missed day doesn&rsquo;t erase
                   your progress and you keep showing up.
@@ -188,13 +215,19 @@ export default function Version1() {
                 <div className="flex flex-col sm:flex-row gap-4">
                   <a
                     href="#download"
-                    className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-[#2d2a26] text-white font-semibold hover:bg-[#3d3a36] transition-colors shadow-xl shadow-amber-900/10"
+                    className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-[var(--text)] text-[var(--background)] font-semibold hover:bg-[#2a231e] transition-colors shadow-xl shadow-[#1f1915]/15"
                   >
                     <Icon icon="simple-icons:apple" className="w-5 h-5" />
                     Get the beta
                   </a>
+                  <a
+                    href="#screens"
+                    className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl border border-[color:var(--hairline)] text-[var(--text)] font-semibold hover:border-[color:var(--text-tertiary)] transition-colors"
+                  >
+                    See the screens
+                  </a>
                 </div>
-                <p className="mt-4 text-sm text-[#6b6560]">
+                <p className="mt-4 text-sm text-[var(--text-tertiary)]">
                   iOS first. Android beta coming next.
                 </p>
               </motion.div>
@@ -219,10 +252,13 @@ export default function Version1() {
         </section>
 
         {/* Why it works */}
-        <section className="py-20 border-t border-amber-900/5">
+        <section
+          id="why"
+          className="py-20 border-t border-[color:var(--hairline)]"
+        >
           <div className="mx-auto w-full max-w-5xl px-0 sm:px-6">
             <div className="text-left md:text-center mb-12 px-6 sm:px-0">
-              <p className="text-sm font-semibold text-[#4a6fa5] uppercase tracking-wider mb-3">
+              <p className="text-sm font-semibold text-[var(--accent-blue)] uppercase tracking-[0.3em] mb-3">
                 Why it works
               </p>
               <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
@@ -233,21 +269,23 @@ export default function Version1() {
               {highlights.map((item) => (
                 <div
                   key={item.title}
-                  className="p-6 pb-0 sm:p-8 sm:pb-0 rounded-3xl bg-white border border-amber-100 shadow-lg shadow-amber-900/5"
+                  className="p-6 pb-0 sm:p-8 sm:pb-0 rounded-[2rem] bg-[var(--surface-secondary)] border border-[color:var(--hairline)] shadow-[0_18px_40px_rgba(32,26,22,0.08)]"
                 >
                   <h3 className="text-xl font-bold mb-2">{item.title}</h3>
-                  <p className="text-[#6b6560] leading-relaxed">{item.desc}</p>
+                  <p className="text-[var(--text-secondary)] leading-relaxed">
+                    {item.desc}
+                  </p>
                   {item.title === "Consistency over streaks" ? (
                     <div className="mt-6 grid grid-cols-2 gap-4">
                       <img
                         src="/consistency-1.png"
                         alt="Consistency over streaks screenshot 1"
-                        className="w-[98%] sm:w-[80%] h-auto object-contain mx-auto"
+                        className="w-full sm:w-[90%] h-auto object-contain mx-auto"
                       />
                       <img
                         src="/consistency-2.png"
                         alt="Consistency over streaks screenshot 2"
-                        className="w-[98%] sm:w-[80%] h-auto object-contain mx-auto translate-y-[3px]"
+                        className="w-full sm:w-[90%] h-auto object-contain mx-auto translate-y-[3px]"
                       />
                     </div>
                   ) : item.title === "Rest days that protect momentum" ? (
@@ -255,7 +293,7 @@ export default function Version1() {
                       <img
                         src="/rest-1.png"
                         alt="Rest days screenshot 1"
-                        className="w-[98%] sm:w-[80%] h-auto object-contain mx-auto self-end"
+                        className="w-full sm:w-[90%] h-auto object-contain mx-auto self-end"
                         style={{
                           WebkitMaskImage:
                             "linear-gradient(to bottom, transparent 0%, black 30%)",
@@ -266,7 +304,7 @@ export default function Version1() {
                       <img
                         src="/rest-2.png"
                         alt="Rest days screenshot 2"
-                        className="w-[98%] sm:w-[80%] h-auto object-contain mx-auto"
+                        className="w-full sm:w-[90%] h-auto object-contain mx-auto"
                       />
                     </div>
                   ) : null}
@@ -277,16 +315,19 @@ export default function Version1() {
         </section>
 
         {/* Statistics */}
-        <section className="py-20 border-t border-amber-900/5">
+        <section
+          id="stats"
+          className="py-20 border-t border-[color:var(--hairline)]"
+        >
           <div className="mx-auto w-full max-w-6xl px-6">
             <div className="text-left md:text-center mb-12">
-              <p className="text-sm font-semibold text-[#4a9a7c] uppercase tracking-wider mb-3">
+              <p className="text-sm font-semibold text-[var(--primary)] uppercase tracking-[0.3em] mb-3">
                 Statistics
               </p>
               <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
                 See your progress clearly
               </h2>
-              <p className="text-lg text-[#6b6560] max-w-2xl md:mx-auto">
+              <p className="text-lg text-[var(--text-secondary)] max-w-2xl md:mx-auto">
                 Track consistency trends and spot what&rsquo;s working at a
                 glance.
               </p>
@@ -314,16 +355,19 @@ export default function Version1() {
         </section>
 
         {/* Screenshots */}
-        <section id="screens" className="py-20">
+        <section
+          id="screens"
+          className="py-20 border-t border-[color:var(--hairline)]"
+        >
           <div className="mx-auto w-full max-w-6xl px-6">
             <div className="text-left md:text-center mb-12">
-              <p className="text-sm font-semibold text-[#4a9a7c] uppercase tracking-wider mb-3">
+              <p className="text-sm font-semibold text-[var(--accent-blue)] uppercase tracking-[0.3em] mb-3">
                 See it at a glance
               </p>
               <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
                 A calm, clear view of your habits
               </h2>
-              <p className="text-lg text-[#6b6560] max-w-2xl md:mx-auto">
+              <p className="text-lg text-[var(--text-secondary)] max-w-2xl md:mx-auto">
                 Daily, weekly, or monthly—choose what fits your life and keep
                 moving forward without the pressure to be perfect.
               </p>
@@ -343,12 +387,12 @@ export default function Version1() {
                   transition={{ delay: i * 0.08 }}
                   className="text-center w-full"
                 >
-                  <div className="mb-4 text-lg font-bold tracking-wide text-[#2d2a26]">
+                  <div className="mb-4 text-lg font-bold tracking-wide text-[var(--text)]">
                     {item.label}
                   </div>
                   <div
                     style={{ aspectRatio: "10 / 16" }}
-                    className="relative w-full rounded-3xl overflow-hidden"
+                    className="relative w-full rounded-[2rem] overflow-hidden"
                   >
                     <Image
                       src={item.src}
@@ -366,12 +410,12 @@ export default function Version1() {
         {/* CTA */}
         <section
           id="download"
-          className="py-20 md:py-24 border-t border-amber-900/5"
+          className="py-20 md:py-24 border-t border-[color:var(--hairline)]"
         >
           <div className="mx-auto w-full max-w-5xl px-6">
-            <div className="relative rounded-[2rem] md:rounded-[2.5rem] overflow-hidden bg-linear-to-br from-[#4a6fa5]/10 via-[#4a9a7c]/10 to-amber-100/50 border border-[#4a6fa5]/20 p-8 sm:p-10 md:p-16 text-center">
-              <div className="absolute top-4 left-4 w-20 h-20 rounded-full bg-[#4a6fa5]/10 blur-xl" />
-              <div className="absolute bottom-4 right-4 w-32 h-32 rounded-full bg-[#4a9a7c]/10 blur-xl" />
+            <div className="relative rounded-[2rem] md:rounded-[2.5rem] overflow-hidden bg-[linear-gradient(135deg,rgba(212,131,91,0.14),rgba(46,108,124,0.1),rgba(227,161,95,0.2))] border border-[color:var(--hairline)] p-8 sm:p-10 md:p-16 text-center shadow-[0_28px_60px_rgba(32,26,22,0.12)]">
+              <div className="absolute top-4 left-4 w-20 h-20 rounded-full bg-[rgba(46,108,124,0.15)] blur-xl" />
+              <div className="absolute bottom-4 right-4 w-32 h-32 rounded-full bg-[rgba(212,131,91,0.18)] blur-xl" />
 
               <div className="relative">
                 <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">
@@ -379,14 +423,14 @@ export default function Version1() {
                   <br />
                   without the pressure?
                 </h2>
-                <p className="text-base sm:text-lg md:text-xl text-[#6b6560] mb-8 sm:mb-10 max-w-lg mx-auto">
+                <p className="text-base sm:text-lg md:text-xl text-[var(--text-secondary)] mb-8 sm:mb-10 max-w-lg mx-auto">
                   Build habits that last in real life—no shame, just progress.
                 </p>
                 <a
                   href="https://apps.apple.com"
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-3 px-8 py-4 sm:px-10 sm:py-5 rounded-2xl bg-[#2d2a26] text-white font-bold text-base sm:text-lg hover:bg-[#3d3a36] transition-colors shadow-xl shadow-amber-900/10"
+                  className="inline-flex items-center gap-3 px-8 py-4 sm:px-10 sm:py-5 rounded-2xl bg-[var(--text)] text-[var(--background)] font-bold text-base sm:text-lg hover:bg-[#2a231e] transition-colors shadow-xl shadow-[#1f1915]/15"
                 >
                   <Icon icon="simple-icons:apple" className="w-6 h-6" />
                   Get the beta
@@ -398,7 +442,7 @@ export default function Version1() {
       </main>
 
       {/* Footer */}
-      <footer className="py-12 border-t border-amber-900/5">
+      <footer className="py-12 border-t border-[color:var(--hairline)]">
         <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-3">
             <div className="relative w-8 h-8">
@@ -411,28 +455,28 @@ export default function Version1() {
             </div>
             <span className="flex flex-col leading-tight">
               <span className="font-bold">Sona</span>
-              <span className="text-[11px] uppercase tracking-[0.18em] text-[#6b6560] font-medium">
+              <span className="text-[11px] uppercase tracking-[0.22em] text-[var(--text-tertiary)] font-semibold">
                 the no‑streak habit tracker
               </span>
             </span>
           </div>
-          <div className="flex flex-wrap items-center justify-center md:justify-end gap-x-6 gap-y-2 text-sm text-[#6b6560]">
-            <Link href="/privacy" className="hover:text-[#2d2a26]">
+          <div className="flex flex-wrap items-center justify-center md:justify-end gap-x-6 gap-y-2 text-sm text-[var(--text-secondary)]">
+            <Link href="/privacy" className="hover:text-[var(--text)]">
               Privacy
             </Link>
-            <Link href="/terms" className="hover:text-[#2d2a26]">
+            <Link href="/terms" className="hover:text-[var(--text)]">
               Terms
             </Link>
-            <Link href="/support" className="hover:text-[#2d2a26]">
+            <Link href="/support" className="hover:text-[var(--text)]">
               Support
             </Link>
-            <a href={feedbackUrl} className="hover:text-[#2d2a26]">
+            <a href={feedbackUrl} className="hover:text-[var(--text)]">
               Feedback
             </a>
             <div className="flex w-full justify-center md:w-auto md:justify-end gap-6 mt-2 sm:mt-0">
               <a
                 href="https://www.reddit.com/r/SonaHabits/"
-                className="inline-flex items-center hover:text-[#2d2a26] align-middle"
+                className="inline-flex items-center hover:text-[var(--text)] align-middle"
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Sona Habits on Reddit"
@@ -441,7 +485,7 @@ export default function Version1() {
               </a>
               <a
                 href="https://x.com/sonahabits"
-                className="inline-flex items-center hover:text-[#2d2a26] align-middle"
+                className="inline-flex items-center hover:text-[var(--text)] align-middle"
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Sona Habits on X"
@@ -450,7 +494,7 @@ export default function Version1() {
               </a>
             </div>
           </div>
-          <p className="text-[#6b6560] text-sm">© 2026 Sona.</p>
+          <p className="text-[var(--text-tertiary)] text-sm">© 2026 Sona.</p>
         </div>
       </footer>
     </div>
