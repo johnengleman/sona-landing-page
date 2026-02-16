@@ -28,6 +28,7 @@ const highlights = [
 
 export default function Version1() {
   const feedbackUrl = "https://sonahabitsapp.userjot.com/";
+  const iosBetaUrl = "https://testflight.apple.com/join/kD5e7pJ9";
 
   return (
     <div
@@ -151,12 +152,14 @@ export default function Version1() {
             </a>
           </nav>
           <a
-            href="#download"
+            href={iosBetaUrl}
+            target="_blank"
+            rel="noreferrer"
             className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-xl bg-[var(--text)] text-[var(--background)] text-sm font-semibold hover:bg-[#2a231e] transition-colors shadow-xl shadow-[#1f1915]/10 sm:gap-3 sm:px-6 sm:py-2.5 sm:rounded-2xl"
           >
             <Icon icon="simple-icons:apple" className="w-4 h-4" />
-            <span className="hidden sm:inline">Get the beta</span>
-            <span className="sm:hidden">Get beta</span>
+            <span className="hidden sm:inline">iPhone beta now</span>
+            <span className="sm:hidden">iPhone beta</span>
           </a>
         </div>
       </header>
@@ -174,7 +177,7 @@ export default function Version1() {
               >
                 <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full border border-[color:var(--hairline)] bg-[var(--surface)] text-[11px] uppercase tracking-[0.28em] text-[var(--text-tertiary)] mb-6">
                   <span className="w-2 h-2 rounded-full bg-[var(--primary)] shadow-[0_0_0_4px_rgba(212,131,91,0.18)]" />
-                  Beta access is open
+                  iPhone beta available now
                 </div>
                 <h1 className="text-5xl md:text-6xl font-bold leading-[1.03] mb-6 tracking-tight">
                   Consistency without
@@ -214,11 +217,13 @@ export default function Version1() {
 
                 <div className="flex flex-col sm:flex-row gap-4">
                   <a
-                    href="#download"
+                    href={iosBetaUrl}
+                    target="_blank"
+                    rel="noreferrer"
                     className="inline-flex items-center justify-center gap-3 px-8 py-4 rounded-2xl bg-[var(--text)] text-[var(--background)] font-semibold hover:bg-[#2a231e] transition-colors shadow-xl shadow-[#1f1915]/15"
                   >
                     <Icon icon="simple-icons:apple" className="w-5 h-5" />
-                    Get the beta
+                    Join iPhone beta
                   </a>
                   <a
                     href="#screens"
@@ -228,7 +233,7 @@ export default function Version1() {
                   </a>
                 </div>
                 <p className="mt-4 text-sm text-[var(--text-tertiary)]">
-                  iOS first. Android beta coming next.
+                  iPhone beta is available now. Android coming soon.
                 </p>
               </motion.div>
 
@@ -425,15 +430,16 @@ export default function Version1() {
                 </h2>
                 <p className="text-base sm:text-lg md:text-xl text-[var(--text-secondary)] mb-8 sm:mb-10 max-w-lg mx-auto">
                   Build habits that last in real life—no shame, just progress.
+                  iPhone beta available now. Android coming soon.
                 </p>
                 <a
-                  href="https://apps.apple.com"
+                  href={iosBetaUrl}
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center gap-3 px-8 py-4 sm:px-10 sm:py-5 rounded-2xl bg-[var(--text)] text-[var(--background)] font-bold text-base sm:text-lg hover:bg-[#2a231e] transition-colors shadow-xl shadow-[#1f1915]/15"
                 >
                   <Icon icon="simple-icons:apple" className="w-6 h-6" />
-                  Get the beta
+                  Join iPhone beta
                 </a>
               </div>
             </div>
